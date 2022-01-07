@@ -1,9 +1,7 @@
 package com.niit.quiz.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.niit.quiz.entity.Test;
 
-import java.util.List;
-
-public interface TestMapper {
-    List<Test> getAll();
+public interface TestMapper extends BaseMapper<Test> {
 }

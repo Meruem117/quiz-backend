@@ -14,7 +14,7 @@ public class Test1 {
 
     @Test
     void test() {
-        List<com.niit.quiz.entity.Test> list = mapper.getAll();
+        List<com.niit.quiz.entity.Test> list = mapper.selectList(null);
         System.out.println(list);
     }
 }
