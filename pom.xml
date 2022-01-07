@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <druid.starter.version>1.1.10.2</druid.starter.version>
+        <mybatis-plus.starter.version>3.4.3.4</mybatis-plus.starter.version>
     </properties>
 
     <dependencies>
@@ -40,12 +42,12 @@
         <dependency>
             <groupId>com.github.drtrang</groupId>
             <artifactId>druid-spring-boot2-starter</artifactId>
-            <version>1.1.10.2</version>
+            <version>${druid.starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.3.4</version>
+            <version>${mybatis-plus.starter.version}</version>
         </dependency>
     </dependencies>
 
