@@ -21,7 +21,7 @@ public class User implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 用户邮箱
+     * 邮箱
      */
     @TableField("email")
     private String email;
