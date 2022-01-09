@@ -15,12 +15,12 @@ public class UserServiceTest {
     private UserService userService;
 
     /**
-     * 测试查询，插入，更新，删除的用户id
+     * test id
      */
     private static final int TEST_ID = 3;
 
     /**
-     * 测试查询列表
+     * query list
      */
     @Test
     void testList() {
@@ -29,7 +29,7 @@ public class UserServiceTest {
     }
 
     /**
-     * 测试查询单条数据
+     * query one line
      */
     @Test
     void testOne() {
@@ -38,7 +38,7 @@ public class UserServiceTest {
     }
 
     /**
-     * 测试更新
+     * update
      */
     @Test
     void testUpdate() {
@@ -55,7 +55,7 @@ public class UserServiceTest {
     }
 
     /**
-     * 测试删除
+     * delete
      */
     @Test
     void testDelete() {
@@ -64,7 +64,7 @@ public class UserServiceTest {
     }
 
     /**
-     * 测试插入
+     * insert
      */
     @Test
     void testInsert() {

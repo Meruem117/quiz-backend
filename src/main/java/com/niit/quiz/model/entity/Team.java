@@ -16,27 +16,27 @@ public class Team implements Serializable {
     private static final long serialVersionUID = 7040621777895623052L;
 
     /**
-     * 组id
+     * team id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 组名
+     * team name
      */
     @TableField("name")
     private String name;
     /**
-     * 组长
+     * team leader
      */
     @TableField("leader")
     private String leader;
     /**
-     * 组长id
+     * leader id
      */
     @TableField("leader_id")
     private Integer leaderId;
     /**
-     * 组创建时间
+     * create time
      */
     @TableField("create_time")
     private Date createTime;

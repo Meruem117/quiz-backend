@@ -15,12 +15,12 @@ public class TeamServiceTest {
     private TeamService teamService;
 
     /**
-     * 测试查询，插入，更新，删除的组id
+     * test id
      */
     private static final int TEST_ID = 2;
 
     /**
-     * 测试查询列表
+     * query list
      */
     @Test
     void testList() {
@@ -29,7 +29,7 @@ public class TeamServiceTest {
     }
 
     /**
-     * 测试查询单条数据
+     * query one line
      */
     @Test
     void testOne() {
@@ -38,7 +38,7 @@ public class TeamServiceTest {
     }
 
     /**
-     * 测试更新
+     * update
      */
     @Test
     void testUpdate() {
@@ -53,7 +53,7 @@ public class TeamServiceTest {
     }
 
     /**
-     * 测试删除
+     * delete
      */
     @Test
     void testDelete() {
@@ -62,7 +62,7 @@ public class TeamServiceTest {
     }
 
     /**
-     * 测试插入
+     * insert
      */
     @Test
     void testInsert() {

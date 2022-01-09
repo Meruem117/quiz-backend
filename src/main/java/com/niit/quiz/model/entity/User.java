@@ -16,37 +16,37 @@ public class User implements Serializable {
     private static final long serialVersionUID = 7279380465148323628L;
 
     /**
-     * 用户id
+     * user id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 邮箱
+     * email
      */
     @TableField("email")
     private String email;
     /**
-     * 用户名
+     * username
      */
     @TableField("name")
     private String name;
     /**
-     * 密码
+     * password
      */
     @TableField("password")
     private String password;
     /**
-     * 角色 2-超级管理员 1-管理员 0-用户
+     * role 2-root 1-admin 0-user
      */
     @TableField("role")
     private Integer role;
     /**
-     * 加入的组
+     * joined teams
      */
     @TableField("team")
     private String team;
     /**
-     * 创建时间
+     * create time
      */
     @TableField("create_time")
     private Date createTime;
