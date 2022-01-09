@@ -1,4 +1,4 @@
-package com.niit.quiz.base;
+package com.niit.quiz.base.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
