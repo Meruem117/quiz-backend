@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.niit.quiz.model.enums.TeamAuthorizedEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -27,20 +26,15 @@ public class Team implements Serializable {
     @TableField("name")
     private String name;
     /**
-     * 组创建者
+     * 组长
      */
     @TableField("leader")
     private String leader;
     /**
-     * 创建者id
+     * 组长id
      */
     @TableField("leader_id")
     private Integer leaderId;
-    /**
-     * 有无认证, 1认证, 0无认证
-     */
-    @TableField("authorized")
-    private Byte authorized;
     /**
      * 组创建时间
      */

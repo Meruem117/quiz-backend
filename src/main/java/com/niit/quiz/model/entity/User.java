@@ -36,7 +36,12 @@ public class User implements Serializable {
     @TableField("password")
     private String password;
     /**
-     * 加入组
+     * 角色 2-超级管理员 1-管理员 0-用户
+     */
+    @TableField("role")
+    private Integer role;
+    /**
+     * 加入的组
      */
     @TableField("team")
     private String team;

@@ -47,6 +47,8 @@ public class UserServiceTest {
         user.setEmail("123456789@number.com");
         user.setName("T");
         user.setPassword("123456");
+        user.setRole(0);
+        user.setTeam("{\"Test\": 2}");
         user.setCreateTime(new Date());
         boolean res = userService.updateById(user);
         Assert.isTrue(res, "");
@@ -71,6 +73,8 @@ public class UserServiceTest {
         user.setEmail("123456789@number.com");
         user.setName("Test");
         user.setPassword("123456");
+        user.setRole(0);
+        user.setTeam("{\"Test\": 2}");
         user.setCreateTime(new Date());
         boolean res = userService.save(user);
         Assert.isTrue(res, "");
