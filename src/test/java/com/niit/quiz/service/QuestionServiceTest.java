@@ -1,7 +1,6 @@
 package com.niit.quiz.service;
 
 import com.niit.quiz.model.entity.Question;
-import com.niit.quiz.model.entity.Topic;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
