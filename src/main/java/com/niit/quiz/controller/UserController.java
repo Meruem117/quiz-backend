@@ -4,6 +4,7 @@ import com.niit.quiz.base.BaseResponse;
 import com.niit.quiz.base.DeleteRequest;
 import com.niit.quiz.base.ResultUtils;
 import com.niit.quiz.entity.User;
+import com.niit.quiz.base.ErrorCodeEnum;
 import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,9 @@ public class UserController {
 
     @GetMapping("/get")
     public BaseResponse<User> getUserById(@RequestParam int id) throws Exception {
+        if (id < 1) {
+            throw new Exception(ErrorCodeEnum.REQUEST_PARAMS_ERROR.getMessage());
+        }
         User user = userService.getById(id);
         return ResultUtils.success(user);
     }
@@ -25,7 +29,7 @@ public class UserController {
     @PostMapping("/insert")
     public BaseResponse<Integer> insertUser(@RequestBody User user) throws Exception {
         if (user == null) {
-            throw new Exception();
+            throw new Exception(ErrorCodeEnum.REQUEST_PARAMS_ERROR.getMessage());
         }
         user.setCreateTime(new Date());
         userService.save(user);
@@ -35,7 +39,7 @@ public class UserController {
     @PostMapping("/update")
     public BaseResponse<Boolean> updateUser(@RequestBody User user) throws Exception {
         if (user == null) {
-            throw new Exception();
+            throw new Exception(ErrorCodeEnum.REQUEST_PARAMS_ERROR.getMessage());
         }
         return ResultUtils.success(userService.updateById(user));
     }
@@ -43,7 +47,7 @@ public class UserController {
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest) throws Exception {
         if (deleteRequest == null || deleteRequest.getId() < 1) {
-            throw new Exception();
+            throw new Exception(ErrorCodeEnum.REQUEST_PARAMS_ERROR.getMessage());
         }
         return ResultUtils.success(userService.removeById(deleteRequest.getId()));
     }
