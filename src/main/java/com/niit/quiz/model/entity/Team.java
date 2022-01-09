@@ -1,42 +1,48 @@
-package com.niit.quiz.entity;
+package com.niit.quiz.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.niit.quiz.model.enums.TeamAuthorizedEnum;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@TableName("user")
-public class User implements Serializable {
+@TableName("team")
+public class Team implements Serializable {
     @TableField(exist = false)
-    private static final long serialVersionUID = 7279380465148323628L;
+    private static final long serialVersionUID = 7040621777895623052L;
 
     /**
-     * 用户id
+     * 组id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 邮箱
-     */
-    @TableField("email")
-    private String email;
-    /**
-     * 用户名
+     * 组名
      */
     @TableField("name")
     private String name;
     /**
-     * 密码
+     * 组创建者
      */
-    @TableField("password")
-    private String password;
+    @TableField("leader")
+    private String leader;
     /**
-     * 创建时间
+     * 创建者id
+     */
+    @TableField("leader_id")
+    private Integer leaderId;
+    /**
+     * 有无认证, 1认证, 0无认证
+     */
+    @TableField("authorized")
+    private Byte authorized;
+    /**
+     * 组创建时间
      */
     @TableField("create_time")
     private Date createTime;

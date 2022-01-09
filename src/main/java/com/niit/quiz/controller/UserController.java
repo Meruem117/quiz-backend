@@ -10,7 +10,7 @@ import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
-import com.niit.quiz.entity.User;
+import com.niit.quiz.model.entity.User;
 import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
 

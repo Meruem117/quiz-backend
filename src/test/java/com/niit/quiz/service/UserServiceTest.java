@@ -1,6 +1,6 @@
 package com.niit.quiz.service;
 
-import com.niit.quiz.entity.User;
+import com.niit.quiz.model.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;

@@ -1,6 +1,6 @@
 package com.niit.quiz.service;
 
-import com.niit.quiz.entity.Team;
+import com.niit.quiz.model.entity.Team;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
@@ -45,8 +45,8 @@ public class TeamServiceTest {
         Team team = new Team();
         team.setId(TEST_ID);
         team.setName("T");
-        team.setCreator("Test");
-        team.setCreatorId(3);
+        team.setLeader("Test");
+        team.setLeaderId(3);
         team.setCreateTime(new Date());
         boolean res = teamService.updateById(team);
         Assert.isTrue(res, "");
@@ -69,8 +69,8 @@ public class TeamServiceTest {
         Team team = new Team();
         team.setId(TEST_ID);
         team.setName("Test");
-        team.setCreator("Test");
-        team.setCreatorId(3);
+        team.setLeader("Test");
+        team.setLeaderId(3);
         team.setCreateTime(new Date());
         boolean res = teamService.save(team);
         Assert.isTrue(res, "");

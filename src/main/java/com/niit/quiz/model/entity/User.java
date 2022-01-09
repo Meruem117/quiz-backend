@@ -1,4 +1,4 @@
-package com.niit.quiz.entity;
+package com.niit.quiz.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -10,33 +10,38 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@TableName("team")
-public class Team implements Serializable {
+@TableName("user")
+public class User implements Serializable {
     @TableField(exist = false)
-    private static final long serialVersionUID = 7040621777895623052L;
+    private static final long serialVersionUID = 7279380465148323628L;
 
     /**
-     * 组id
+     * 用户id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 组名
+     * 邮箱
+     */
+    @TableField("email")
+    private String email;
+    /**
+     * 用户名
      */
     @TableField("name")
     private String name;
     /**
-     * 组创建者
+     * 密码
      */
-    @TableField("creator")
-    private String creator;
+    @TableField("password")
+    private String password;
     /**
-     * 创建者id
+     * 加入组
      */
-    @TableField("creator_id")
-    private Integer creatorId;
+    @TableField("team")
+    private String team;
     /**
-     * 组创建时间
+     * 创建时间
      */
     @TableField("create_time")
     private Date createTime;
