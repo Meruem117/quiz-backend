@@ -50,6 +50,11 @@ public class Result implements Serializable {
     @TableField("mark")
     private Integer mark;
     /**
+     * error question list
+     */
+    @TableField("error_list")
+    private String errorList;
+    /**
      * is out or not: 1-out, 0-not out
      */
     @TableField("is_out")

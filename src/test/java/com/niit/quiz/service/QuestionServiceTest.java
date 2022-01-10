@@ -45,17 +45,8 @@ public class QuestionServiceTest {
     void testUpdate() {
         Question question = new Question();
         question.setId(TEST_ID);
-        question.setQuestion("3+1=?");
-        question.setTopic("Maths");
-        question.setType(1);
-        question.setOptionA("1");
-        question.setOptionB("2");
-        question.setOptionC("3");
-        question.setOptionD("4");
-        question.setAnswer("b");
+        question.setAnswer("c");
         question.setScore(2);
-        question.setCreateTime(new Date());
-        question.setUpdateTime(new Date());
         boolean res = questionService.updateById(question);
         Assert.isTrue(res, "");
     }
