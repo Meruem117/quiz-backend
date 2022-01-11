@@ -19,7 +19,7 @@ public class QuestionController {
     @Resource
     private QuestionService questionService;
 
-    @GetMapping("/get")
+    @GetMapping("/list")
     public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam String topic) {
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
         questionQueryWrapper.eq("topic", topic);
