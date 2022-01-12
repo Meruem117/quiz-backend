@@ -27,7 +27,7 @@ public class ScheduleController {
      * @return
      */
     @GetMapping("/start")
-    public BaseResponse<List<Schedule>> getQuizRoundConductingList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam int limit) {
         String limitSql = "limit " + limit;
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_start", ScheduleConditionEnum.START.getValue());
@@ -44,7 +44,7 @@ public class ScheduleController {
      * @return
      */
     @GetMapping("/end")
-    public BaseResponse<List<Schedule>> getQuizRoundFinishedList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam int limit) {
         String limitSql = "limit " + limit;
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_end", ScheduleConditionEnum.END.getValue());
