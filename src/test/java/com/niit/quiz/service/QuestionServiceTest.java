@@ -25,7 +25,6 @@ public class QuestionServiceTest {
     @Test
     void testList() {
         List<Question> list = questionService.list();
-        System.out.println(list);
         Assert.notEmpty(list, "");
     }
 

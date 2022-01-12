@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @TableName("quiz")
@@ -50,31 +49,6 @@ public class Quiz implements Serializable {
      */
     @TableField("question")
     private String question;
-    /**
-     * participant list
-     */
-    @TableField("participant")
-    private String participant;
-    /**
-     * quiz start time
-     */
-    @TableField("start_time")
-    private Date startTime;
-    /**
-     * quiz end time
-     */
-    @TableField("end_time")
-    private Date endTime;
-    /**
-     * is start or not: 1-start, 0-not start
-     */
-    @TableField("is_start")
-    private Integer isStart;
-    /**
-     * is end or not: 1-end, 0-not end
-     */
-    @TableField("is_end")
-    private Integer isEnd;
     /**
      * winner name
      */

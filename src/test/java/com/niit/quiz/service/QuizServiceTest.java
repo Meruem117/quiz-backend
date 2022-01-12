@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -44,7 +43,7 @@ public class QuizServiceTest {
     void testUpdate() {
         Quiz quiz = new Quiz();
         quiz.setId(TEST_ID);
-        quiz.setIsStart(1);
+        quiz.setRound(5);
         boolean res = quizService.updateById(quiz);
         Assert.isTrue(res, "");
     }
@@ -71,11 +70,6 @@ public class QuizServiceTest {
         quiz.setCreator("N");
         quiz.setCreatorId(2);
         quiz.setQuestion("1-2-3");
-        quiz.setParticipant("{\"Jump\": 1, \"Test\": 2}");
-        quiz.setStartTime(new Date());
-        quiz.setEndTime(new Date());
-        quiz.setIsStart(0);
-        quiz.setIsEnd(0);
         quiz.setWinner(null);
         quiz.setWinnerId(null);
         quiz.setIsTeam(null);
