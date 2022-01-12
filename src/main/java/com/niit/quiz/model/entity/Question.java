@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @TableName("question")
@@ -69,10 +68,10 @@ public class Question implements Serializable {
      * create time
      */
     @TableField("create_time")
-    private Date createTime;
+    private String createTime;
     /**
      * update time
      */
     @TableField("update_time")
-    private Date updateTime;
+    private String updateTime;
 }

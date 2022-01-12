@@ -43,7 +43,7 @@ public class ScheduleServiceTest {
     void testUpdate() {
         Schedule schedule = new Schedule();
         schedule.setId(TEST_ID);
-        schedule.setMark(4);
+        schedule.setRound(4);
         boolean res = scheduleService.updateById(schedule);
         Assert.isTrue(res, "");
     }
@@ -65,13 +65,8 @@ public class ScheduleServiceTest {
         Schedule schedule = new Schedule();
         schedule.setId(TEST_ID);
         schedule.setQuizId(1);
+        schedule.setQuizName("First Quiz");
         schedule.setRound(1);
-        schedule.setIsEnd(1);
-        schedule.setParticipantId(2);
-        schedule.setIsTeam(1);
-        schedule.setMark(2);
-        schedule.setErrorList("1-2");
-        schedule.setIsOut(1);
         boolean res = scheduleService.save(schedule);
         Assert.isTrue(res, "");
     }

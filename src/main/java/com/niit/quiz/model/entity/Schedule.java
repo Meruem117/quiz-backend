@@ -15,7 +15,7 @@ public class Schedule implements Serializable {
     private static final long serialVersionUID = -2834046975062006391L;
 
     /**
-     * result id
+     * schedule id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -25,10 +25,20 @@ public class Schedule implements Serializable {
     @TableField("quiz_id")
     private Integer quizId;
     /**
+     * quiz name
+     */
+    @TableField("quiz_name")
+    private String quizName;
+    /**
      * current round
      */
     @TableField("round")
     private Integer round;
+    /**
+     * question list, max 30 questions
+     */
+    @TableField("question")
+    private String question;
     /**
      * current round start time
      */
@@ -40,33 +50,13 @@ public class Schedule implements Serializable {
     @TableField("end_time")
     private String endTime;
     /**
-     * is the last round: 1-last round, 0-not last round
+     * is the round start: 1-round start, 0-round not start
+     */
+    @TableField("is_start")
+    private Integer isStart;
+    /**
+     * is the round end: 1-round end, 0-round not end
      */
     @TableField("is_end")
     private Integer isEnd;
-    /**
-     * participant id
-     */
-    @TableField("participant_id")
-    private Integer participantId;
-    /**
-     * is team or individual: 1-team, 0-individual
-     */
-    @TableField("is_team")
-    private Integer isTeam;
-    /**
-     * mark
-     */
-    @TableField("mark")
-    private Integer mark;
-    /**
-     * error question list
-     */
-    @TableField("error_list")
-    private String errorList;
-    /**
-     * is out or not: 1-out, 0-not out
-     */
-    @TableField("is_out")
-    private Integer isOut;
 }

@@ -32,8 +32,8 @@ public class QuizServiceTest {
      */
     @Test
     void testOne() {
-        Quiz team = quizService.getById(TEST_ID);
-        Assert.notNull(team, "");
+        Quiz quiz = quizService.getById(TEST_ID);
+        Assert.notNull(quiz, "");
     }
 
     /**

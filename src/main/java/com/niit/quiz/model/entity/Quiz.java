@@ -45,10 +45,10 @@ public class Quiz implements Serializable {
     @TableField("creator_id")
     private Integer creatorId;
     /**
-     * question list, max 30 questions
+     * description of quiz
      */
-    @TableField("question")
-    private String question;
+    @TableField("description")
+    private String description;
     /**
      * winner name
      */

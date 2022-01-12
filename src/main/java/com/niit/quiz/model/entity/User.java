@@ -41,11 +41,6 @@ public class User implements Serializable {
     @TableField("role")
     private Integer role;
     /**
-     * joined teams
-     */
-    @TableField("team")
-    private String team;
-    /**
      * create time
      */
     @TableField("create_time")
