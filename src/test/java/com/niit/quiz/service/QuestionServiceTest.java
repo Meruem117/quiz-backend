@@ -75,8 +75,8 @@ public class QuestionServiceTest {
         question.setOptionD("4");
         question.setAnswer("d");
         question.setScore(2);
-        question.setCreateTime(new Date());
-        question.setUpdateTime(new Date());
+//        question.setCreateTime(new Date());
+//        question.setUpdateTime(new Date());
         boolean res = questionService.save(question);
         Assert.isTrue(res, "");
     }

@@ -19,6 +19,12 @@ public class QuestionController {
     @Resource
     private QuestionService questionService;
 
+    /**
+     * get question list by topic name
+     *
+     * @param topic
+     * @return
+     */
     @GetMapping("/list")
     public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam String topic) {
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();

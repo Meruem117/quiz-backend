@@ -69,7 +69,6 @@ public class UserServiceTest {
         user.setName("Test");
         user.setPassword("123456");
         user.setRole(0);
-        user.setTeam("{\"Test\": 2}");
         user.setCreateTime(new Date());
         boolean res = userService.save(user);
         Assert.isTrue(res, "");

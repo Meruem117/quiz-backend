@@ -69,7 +69,6 @@ public class QuizServiceTest {
         quiz.setRound(1);
         quiz.setCreator("N");
         quiz.setCreatorId(2);
-        quiz.setQuestion("1-2-3");
         quiz.setWinner(null);
         quiz.setWinnerId(null);
         quiz.setIsTeam(null);
