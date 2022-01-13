@@ -21,6 +21,17 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     /**
+     * get schedule info by id
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get")
+    public BaseResponse<Schedule> getScheduleById(@RequestParam int id) {
+        return ResultUtils.success(scheduleService.getById(id));
+    }
+
+    /**
      * get quiz rounds that has started but not ended
      *
      * @param limit
@@ -59,7 +70,7 @@ public class ScheduleController {
      * @param limit
      * @return
      */
-    @GetMapping("/end")
+    @GetMapping("/current")
     public BaseResponse<List<Schedule>> getScheduleNotEndList(@RequestParam int limit) {
         String limitSql = "limit " + limit;
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();

@@ -20,6 +20,17 @@ public class QuestionController {
     private QuestionService questionService;
 
     /**
+     * get question by id
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get")
+    public BaseResponse<Question> getQuestionById(@RequestParam int id) {
+        return ResultUtils.success(questionService.getById(id));
+    }
+
+    /**
      * get question list by topic name
      *
      * @param topic
