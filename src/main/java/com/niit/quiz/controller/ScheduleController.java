@@ -52,4 +52,20 @@ public class ScheduleController {
         queryWrapper.last(limitSql);
         return ResultUtils.success(scheduleService.list(queryWrapper));
     }
+
+    /**
+     * get quiz rounds that has not ended
+     *
+     * @param limit
+     * @return
+     */
+    @GetMapping("/end")
+    public BaseResponse<List<Schedule>> getScheduleNotEndList(@RequestParam int limit) {
+        String limitSql = "limit " + limit;
+        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("is_end", ScheduleConditionEnum.NOT_END.getValue());
+        queryWrapper.orderByDesc("end_time");
+        queryWrapper.last(limitSql);
+        return ResultUtils.success(scheduleService.list(queryWrapper));
+    }
 }
