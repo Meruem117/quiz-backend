@@ -1,6 +1,6 @@
 package com.niit.quiz.model.enums;
 
-public enum ScheduleConditionEnum {
+public enum ScheduleStatusEnum {
     START(1, "quiz round has started"),
     NOT_START(0, "quiz round has not started"),
     END(1, "quiz round has ended"),
@@ -9,7 +9,7 @@ public enum ScheduleConditionEnum {
     private final int value;
     private final String text;
 
-    ScheduleConditionEnum(int value, String text) {
+    ScheduleStatusEnum(int value, String text) {
         this.value = value;
         this.text = text;
     }

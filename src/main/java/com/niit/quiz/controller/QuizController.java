@@ -20,8 +20,8 @@ public class QuizController {
     /**
      * get quiz detail by id
      *
-     * @param id
-     * @return
+     * @param id quiz id
+     * @return quiz item
      */
     @GetMapping("/get")
     public BaseResponse<Quiz> getQuizById(@RequestParam int id) {

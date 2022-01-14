@@ -15,6 +15,11 @@ public class TopicController {
     @Resource
     private TopicService topicService;
 
+    /**
+     * get topic list
+     *
+     * @return topic item list
+     */
     @GetMapping("/list")
     public BaseResponse<List<Topic>> getTopicList() {
         return ResultUtils.success(topicService.list());

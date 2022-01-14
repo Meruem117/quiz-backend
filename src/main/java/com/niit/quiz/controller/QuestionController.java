@@ -22,8 +22,8 @@ public class QuestionController {
     /**
      * get question by id
      *
-     * @param id
-     * @return
+     * @param id question id
+     * @return question item
      */
     @GetMapping("/get")
     public BaseResponse<Question> getQuestionById(@RequestParam int id) {
@@ -33,8 +33,8 @@ public class QuestionController {
     /**
      * get question list by topic name
      *
-     * @param topic
-     * @return
+     * @param topic topic name
+     * @return question item list
      */
     @GetMapping("/list")
     public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam String topic) {
