@@ -21,13 +21,13 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     /**
-     * get schedule info of quiz that has started but not ended by quiz id
+     * get schedule info of current round of quiz by quiz id
      *
      * @param quizId quiz id
      * @return schedule item
      */
     @GetMapping("/get")
-    public BaseResponse<Schedule> getScheduleByQuiz(@RequestParam int quizId) {
+    public BaseResponse<Schedule> getScheduleByQuizId(@RequestParam int quizId) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("quiz_id", quizId);
         queryWrapper.eq("is_start", ScheduleStatusEnum.START.getValue());
