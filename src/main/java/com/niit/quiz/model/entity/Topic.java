@@ -24,4 +24,9 @@ public class Topic implements Serializable {
      */
     @TableField("topic")
     private String topic;
+    /**
+     * topic description
+     */
+    @TableField("description")
+    private String description;
 }
