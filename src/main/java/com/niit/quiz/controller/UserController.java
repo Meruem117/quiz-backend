@@ -23,8 +23,8 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @GetMapping("/list")
-    public BaseResponse<IPage<User>> getUserList(@RequestBody UserSearchRequest request) {
+    @GetMapping("/search")
+    public BaseResponse<IPage<User>> getUserList(UserSearchRequest request) {
         int pageNum = request.getPageNum();
         int pageSize = request.getPageSize();
         String name = request.getName();
