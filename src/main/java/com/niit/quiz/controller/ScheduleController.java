@@ -36,13 +36,23 @@ public class ScheduleController {
     }
 
     /**
+     * get schedule list
+     *
+     * @return schedule item list
+     */
+    @GetMapping("/list")
+    public BaseResponse<List<Schedule>> getScheduleList() {
+        return ResultUtils.success(scheduleService.list());
+    }
+
+    /**
      * get quiz rounds that has started but not ended, if limit <= 0, then list all
      *
      * @param limit limit rows
      * @return schedule item list
      */
     @GetMapping("/start")
-    public BaseResponse<List<Schedule>> getScheduleStartLimitList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam int limit) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_start", ScheduleStatusEnum.START.getValue());
         queryWrapper.eq("is_end", ScheduleStatusEnum.NOT_END.getValue());
@@ -60,7 +70,7 @@ public class ScheduleController {
      * @return schedule item list
      */
     @GetMapping("/end")
-    public BaseResponse<List<Schedule>> getScheduleEndLimitList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam int limit) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_end", ScheduleStatusEnum.END.getValue());
         if (limit > 0) {
@@ -71,15 +81,15 @@ public class ScheduleController {
     }
 
     /**
-     * get quiz rounds that has not ended, if limit <= 0, then list all
+     * get quiz rounds that has not started, if limit <= 0, then list all
      *
      * @param limit limit rows
      * @return schedule item list
      */
     @GetMapping("/remain")
-    public BaseResponse<List<Schedule>> getScheduleRemainLimitList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleRemainList(@RequestParam int limit) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_end", ScheduleStatusEnum.NOT_END.getValue());
+        queryWrapper.eq("is_start", ScheduleStatusEnum.NOT_START.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
             queryWrapper.last(limitSql);
