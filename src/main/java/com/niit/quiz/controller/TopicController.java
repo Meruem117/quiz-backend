@@ -12,6 +12,7 @@ import com.niit.quiz.service.TopicService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/topic")
@@ -25,7 +26,17 @@ public class TopicController {
      * @return topic item list
      */
     @GetMapping("/list")
-    public BaseResponse<IPage<Topic>> getTopicList(PageRequest pageRequest) {
+    public BaseResponse<List<Topic>> getTopicList() {
+        return ResultUtils.success(topicService.list());
+    }
+
+    /**
+     * get topic pages
+     *
+     * @return topic item pages
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Topic>> getTopicPages(PageRequest pageRequest) {
         int pageNum = pageRequest.getPageNum();
         int pageSize = pageRequest.getPageSize();
         if (pageNum < 1) {
