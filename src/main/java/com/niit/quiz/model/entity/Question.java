@@ -27,13 +27,13 @@ public class Question implements Serializable {
     /**
      * uploader
      */
-    @TableField("uploader")
-    private String uploader;
+    @TableField("up")
+    private String up;
     /**
      * uploader id
      */
-    @TableField("uploader_id")
-    private Integer uploaderId;
+    @TableField("up_id")
+    private Integer upId;
     /**
      * question topic
      */

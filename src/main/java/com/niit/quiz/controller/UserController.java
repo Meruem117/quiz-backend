@@ -15,7 +15,6 @@ import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/user")
@@ -53,7 +52,6 @@ public class UserController {
         if (user == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        user.setCreateTime(new Date());
         userService.save(user);
         return ResultUtils.success(user.getId());
     }

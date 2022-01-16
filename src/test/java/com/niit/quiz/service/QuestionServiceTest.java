@@ -65,8 +65,8 @@ public class QuestionServiceTest {
         Question question = new Question();
         question.setId(TEST_ID);
         question.setQuestion("3+1=?");
-        question.setUploader("M");
-        question.setUploaderId(1);
+        question.setUp("M");
+        question.setUpId(1);
         question.setTopic("Maths");
         question.setType(1);
         question.setOptionA("1");
