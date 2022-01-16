@@ -30,6 +30,7 @@ public class ScheduleController {
     public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam int quizId) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("quiz_id", quizId);
+        queryWrapper.orderByAsc("round");
         return ResultUtils.success(scheduleService.list(queryWrapper));
     }
 
