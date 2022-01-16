@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -68,7 +67,7 @@ public class TeamServiceTest {
         team.setName("Test");
         team.setLeader("Test");
         team.setLeaderId(3);
-        team.setCreateTime(new Date());
+        team.setCreateTime("2022-01-08");
         boolean res = teamService.save(team);
         Assert.isTrue(res, "");
     }

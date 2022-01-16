@@ -25,6 +25,16 @@ public class Question implements Serializable {
     @TableField("question")
     private String question;
     /**
+     * uploader
+     */
+    @TableField("uploader")
+    private String uploader;
+    /**
+     * uploader id
+     */
+    @TableField("uploader_id")
+    private Integer uploaderId;
+    /**
      * question topic
      */
     @TableField("topic")
@@ -59,11 +69,6 @@ public class Question implements Serializable {
      */
     @TableField("answer")
     private String answer;
-    /**
-     * score
-     */
-    @TableField("score")
-    private Integer score;
     /**
      * create time
      */

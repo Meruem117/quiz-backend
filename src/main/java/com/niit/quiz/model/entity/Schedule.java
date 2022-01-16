@@ -35,6 +35,11 @@ public class Schedule implements Serializable {
     @TableField("round")
     private Integer round;
     /**
+     * question count, max 30
+     */
+    @TableField("count")
+    private Integer count;
+    /**
      * question list, max 30 questions
      */
     @TableField("question")
@@ -45,10 +50,10 @@ public class Schedule implements Serializable {
     @TableField("start_time")
     private String startTime;
     /**
-     * current round end time
+     * how many minutes a round last
      */
-    @TableField("end_time")
-    private String endTime;
+    @TableField("length")
+    private Integer length;
     /**
      * is the round start: 1-round start, 0-round not start
      */

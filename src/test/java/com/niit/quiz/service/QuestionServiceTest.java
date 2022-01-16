@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -45,7 +44,6 @@ public class QuestionServiceTest {
         Question question = new Question();
         question.setId(TEST_ID);
         question.setAnswer("c");
-        question.setScore(2);
         boolean res = questionService.updateById(question);
         Assert.isTrue(res, "");
     }
@@ -67,6 +65,8 @@ public class QuestionServiceTest {
         Question question = new Question();
         question.setId(TEST_ID);
         question.setQuestion("3+1=?");
+        question.setUploader("M");
+        question.setUploaderId(1);
         question.setTopic("Maths");
         question.setType(1);
         question.setOptionA("1");
@@ -74,9 +74,8 @@ public class QuestionServiceTest {
         question.setOptionC("3");
         question.setOptionD("4");
         question.setAnswer("d");
-        question.setScore(2);
-//        question.setCreateTime(new Date());
-//        question.setUpdateTime(new Date());
+        question.setCreateTime("2022-01-08 15:30:30");
+        question.setUpdateTime("2022-01-08 15:30:30");
         boolean res = questionService.save(question);
         Assert.isTrue(res, "");
     }

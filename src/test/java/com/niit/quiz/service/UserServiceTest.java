@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -69,7 +68,7 @@ public class UserServiceTest {
         user.setName("Test");
         user.setPassword("123456");
         user.setRole(0);
-        user.setCreateTime(new Date());
+        user.setCreateTime("2022-01-08");
         boolean res = userService.save(user);
         Assert.isTrue(res, "");
     }

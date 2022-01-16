@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @TableName("team")
@@ -39,5 +38,5 @@ public class Team implements Serializable {
      * create time
      */
     @TableField("create_time")
-    private Date createTime;
+    private String createTime;
 }

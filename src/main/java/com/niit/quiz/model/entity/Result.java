@@ -48,17 +48,17 @@ public class Result implements Serializable {
      * participant name
      */
     @TableField("participant_name")
-    private Integer participantName;
+    private String participantName;
     /**
      * is team or individual: 1-team, 0-individual
      */
     @TableField("is_team")
     private Integer isTeam;
     /**
-     * mark
+     * correct answer count
      */
-    @TableField("mark")
-    private Integer mark;
+    @TableField("correct")
+    private Integer correct;
     /**
      * error question list, max 30 questions
      */

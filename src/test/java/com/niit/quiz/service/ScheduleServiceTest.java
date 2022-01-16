@@ -67,6 +67,12 @@ public class ScheduleServiceTest {
         schedule.setQuizId(1);
         schedule.setQuizName("First Quiz");
         schedule.setRound(1);
+        schedule.setCount(3);
+        schedule.setQuestion("1-2-3");
+        schedule.setStartTime("2022-01-08 15:30:00");
+        schedule.setLength(30);
+        schedule.setIsStart(0);
+        schedule.setIsEnd(0);
         boolean res = scheduleService.save(schedule);
         Assert.isTrue(res, "");
     }
