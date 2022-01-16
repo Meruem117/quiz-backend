@@ -21,18 +21,16 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     /**
-     * get schedule info of current round of quiz by quiz id
+     * get schedule list by quiz id
      *
      * @param quizId quiz id
-     * @return schedule item
+     * @return schedule item list
      */
     @GetMapping("/get")
-    public BaseResponse<Schedule> getScheduleByQuizId(@RequestParam int quizId) {
+    public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam int quizId) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("quiz_id", quizId);
-        queryWrapper.eq("is_start", ScheduleStatusEnum.START.getValue());
-        queryWrapper.eq("is_end", ScheduleStatusEnum.NOT_END.getValue());
-        return ResultUtils.success(scheduleService.getOne(queryWrapper));
+        return ResultUtils.success(scheduleService.list(queryWrapper));
     }
 
     /**
@@ -46,48 +44,39 @@ public class ScheduleController {
     }
 
     /**
-     * get quiz rounds that has started but not ended, if limit <= 0, then list all
+     * get quiz rounds that has started but not ended
      *
-     * @param limit limit rows
      * @return schedule item list
      */
     @GetMapping("/start")
-    public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleStartList() {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_start", ScheduleStatusEnum.START.getValue());
         queryWrapper.eq("is_end", ScheduleStatusEnum.NOT_END.getValue());
-        String limitSql = "limit " + limit;
-        queryWrapper.last(limitSql);
         return ResultUtils.success(scheduleService.list(queryWrapper));
     }
 
     /**
-     * get quiz rounds that has ended, if limit <= 0, then list all
+     * get quiz rounds that has ended
      *
-     * @param limit limit rows
      * @return schedule item list
      */
     @GetMapping("/end")
-    public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleEndList() {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_end", ScheduleStatusEnum.END.getValue());
-        String limitSql = "limit " + limit;
-        queryWrapper.last(limitSql);
         return ResultUtils.success(scheduleService.list(queryWrapper));
     }
 
     /**
-     * get quiz rounds that has not started, if limit <= 0, then list all
+     * get quiz rounds that has not started
      *
-     * @param limit limit rows
      * @return schedule item list
      */
     @GetMapping("/remain")
-    public BaseResponse<List<Schedule>> getScheduleRemainList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleRemainList() {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("is_start", ScheduleStatusEnum.NOT_START.getValue());
-        String limitSql = "limit " + limit;
-        queryWrapper.last(limitSql);
         return ResultUtils.success(scheduleService.list(queryWrapper));
     }
 }

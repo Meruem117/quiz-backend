@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/quiz")
@@ -26,5 +27,15 @@ public class QuizController {
     @GetMapping("/get")
     public BaseResponse<Quiz> getQuizById(@RequestParam int id) {
         return ResultUtils.success(quizService.getById(id));
+    }
+
+    /**
+     * get quiz list
+     *
+     * @return quiz item list
+     */
+    @GetMapping("/list")
+    public BaseResponse<List<Quiz>> getQuizList() {
+        return ResultUtils.success(quizService.list());
     }
 }
