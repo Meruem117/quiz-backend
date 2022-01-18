@@ -4,6 +4,7 @@ import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.model.entity.Team;
 import com.niit.quiz.service.TeamService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ public class TeamController {
      *
      * @return team item list
      */
+    @GetMapping("/list")
     public BaseResponse<List<Team>> getTeamList() {
         return ResultUtils.success(teamService.list());
     }
