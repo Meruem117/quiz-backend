@@ -35,6 +35,11 @@ public class Team implements Serializable {
     @TableField("leader_id")
     private Integer leaderId;
     /**
+     * description of team
+     */
+    @TableField("description")
+    private String description;
+    /**
      * create time
      */
     @TableField("create_time")

@@ -67,6 +67,7 @@ public class TeamServiceTest {
         team.setName("Test");
         team.setLeader("Test");
         team.setLeaderId(3);
+        team.setDescription("This is a test.");
         team.setCreateTime("2022-01-08");
         boolean res = teamService.save(team);
         Assert.isTrue(res, "");
