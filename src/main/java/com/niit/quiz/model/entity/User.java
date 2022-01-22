@@ -40,6 +40,16 @@ public class User implements Serializable {
     @TableField("role")
     private Integer role;
     /**
+     * gender
+     */
+    @TableField("gender")
+    private Integer gender;
+    /**
+     * location
+     */
+    @TableField("location")
+    private String location;
+    /**
      * create time
      */
     @TableField("create_time")

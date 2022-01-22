@@ -1,5 +1,7 @@
 package com.niit.quiz.controller;
 
+import com.niit.quiz.base.exception.BaseException;
+import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.model.entity.Quiz;
@@ -26,6 +28,9 @@ public class QuizController {
      */
     @GetMapping("/get")
     public BaseResponse<Quiz> getQuizById(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         return ResultUtils.success(quizService.getById(id));
     }
 

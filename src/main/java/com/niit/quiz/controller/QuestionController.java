@@ -1,6 +1,8 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.niit.quiz.base.exception.BaseException;
+import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.model.entity.Question;
@@ -27,6 +29,9 @@ public class QuestionController {
      */
     @GetMapping("/get")
     public BaseResponse<Question> getQuestionById(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         return ResultUtils.success(questionService.getById(id));
     }
 
@@ -38,6 +43,9 @@ public class QuestionController {
      */
     @GetMapping("/list")
     public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam String topic) {
+        if (topic == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
         questionQueryWrapper.eq("topic", topic);
         return ResultUtils.success(questionService.list(questionQueryWrapper));

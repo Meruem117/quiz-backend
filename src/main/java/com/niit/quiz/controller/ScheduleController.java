@@ -1,6 +1,8 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.niit.quiz.base.exception.BaseException;
+import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.model.entity.Schedule;
@@ -28,6 +30,9 @@ public class ScheduleController {
      */
     @GetMapping("/get")
     public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam int quizId) {
+        if (quizId < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("quiz_id", quizId);
         queryWrapper.orderByAsc("round");
