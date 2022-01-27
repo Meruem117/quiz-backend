@@ -2,7 +2,7 @@ package com.niit.quiz.base.response;
 
 public class ResultUtils {
     /**
-     * succeed
+     * success
      */
     public static <T> BaseResponse<T> success(T data) {
         return new BaseResponse<>(200, data, "success");
