@@ -11,6 +11,7 @@ import com.niit.quiz.base.request.UserLoginRequest;
 import com.niit.quiz.base.request.UserSearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
+import com.niit.quiz.base.response.UserCheckResponse;
 import com.niit.quiz.model.entity.User;
 import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -56,13 +57,14 @@ public class UserController {
      * @return check result
      */
     @PostMapping("check")
-    public BaseResponse<Boolean> checkUserPassword(@RequestBody UserLoginRequest request) {
+    public BaseResponse<UserCheckResponse> checkUserPassword(@RequestBody UserLoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("email", email);
         User user = userService.getOne(queryWrapper);
-        return ResultUtils.success(Objects.equals(password, user.getPassword()));
+        Boolean check = Objects.equals(password, user.getPassword());
+        return ResultUtils.success(new UserCheckResponse(check, user));
     }
 
     @PostMapping("/insert")
