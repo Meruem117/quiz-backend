@@ -23,20 +23,14 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     /**
-     * get schedule list by quiz id
+     * get schedule by id
      *
-     * @param quizId quiz id
-     * @return schedule item list
+     * @param id schedule id
+     * @return schedule item
      */
     @GetMapping("/get")
-    public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam int quizId) {
-        if (quizId < 1) {
-            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
-        }
-        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("quiz_id", quizId);
-        queryWrapper.orderByAsc("round");
-        return ResultUtils.success(scheduleService.list(queryWrapper));
+    public BaseResponse<Schedule> getScheduleById(@RequestParam int id) {
+        return ResultUtils.success(scheduleService.getById(id));
     }
 
     /**
@@ -47,6 +41,23 @@ public class ScheduleController {
     @GetMapping("/list")
     public BaseResponse<List<Schedule>> getScheduleList() {
         return ResultUtils.success(scheduleService.list());
+    }
+
+    /**
+     * get schedule list by quiz id
+     *
+     * @param quizId quiz id
+     * @return schedule item list
+     */
+    @GetMapping("/quiz")
+    public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam int quizId) {
+        if (quizId < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("quiz_id", quizId);
+        queryWrapper.orderByAsc("round");
+        return ResultUtils.success(scheduleService.list(queryWrapper));
     }
 
     /**
