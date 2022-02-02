@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -48,6 +50,24 @@ public class QuestionController {
         }
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
         questionQueryWrapper.eq("topic", topic);
+        return ResultUtils.success(questionService.list(questionQueryWrapper));
+    }
+
+    /**
+     * get question list by question of schedule
+     *
+     * @param question question of schedule
+     * @return question list
+     */
+    @GetMapping("/schedule")
+    public BaseResponse<List<Question>> getQuestionListBySchedule(@RequestParam String question) {
+        String[] array = question.split("-");
+        QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
+        Collection<Integer> ids = new ArrayList<>();
+        for (String id : array) {
+            ids.add(Integer.parseInt(id));
+        }
+        questionQueryWrapper.in("id", ids);
         return ResultUtils.success(questionService.list(questionQueryWrapper));
     }
 }
