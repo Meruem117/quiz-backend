@@ -55,10 +55,20 @@ public class Result implements Serializable {
     @TableField("is_team")
     private Integer isTeam;
     /**
+     * status: 0-not start, 1-start, 2-end
+     */
+    @TableField("status")
+    private Integer status;
+    /**
      * correct answer count
      */
     @TableField("correct")
     private Integer correct;
+    /**
+     * correct rate
+     */
+    @TableField("correct_rate")
+    private Integer correctRate;
     /**
      * error question list, max 30 questions
      */

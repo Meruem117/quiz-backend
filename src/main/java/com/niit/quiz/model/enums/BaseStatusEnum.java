@@ -1,14 +1,13 @@
 package com.niit.quiz.model.enums;
 
-public enum ScheduleStatusEnum {
-    START(1),
+public enum BaseStatusEnum {
     NOT_START(0),
-    END(1),
-    NOT_END(0);
+    START(1),
+    END(2);
 
     private final int value;
 
-    ScheduleStatusEnum(int value) {
+    BaseStatusEnum(int value) {
         this.value = value;
     }
 
