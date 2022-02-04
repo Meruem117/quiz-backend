@@ -30,6 +30,9 @@ public class ScheduleController {
      */
     @GetMapping("/get")
     public BaseResponse<Schedule> getScheduleById(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         return ResultUtils.success(scheduleService.getById(id));
     }
 

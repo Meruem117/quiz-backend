@@ -1,6 +1,8 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.niit.quiz.base.exception.BaseException;
+import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.model.entity.Result;
@@ -28,6 +30,9 @@ public class ResultController {
      */
     @GetMapping("/users")
     public BaseResponse<List<Result>> getUserResultListByUserId(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
         resultQueryWrapper.eq("is_team", IsTeamEnum.USER.getValue());
         resultQueryWrapper.eq("participant_id", id);
@@ -42,6 +47,9 @@ public class ResultController {
      */
     @GetMapping("/teams")
     public BaseResponse<List<Result>> getTeamResultListByTeamId(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
         QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
         resultQueryWrapper.eq("is_team", IsTeamEnum.TEAM.getValue());
         resultQueryWrapper.eq("participant_id", id);

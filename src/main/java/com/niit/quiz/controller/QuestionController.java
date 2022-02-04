@@ -38,6 +38,22 @@ public class QuestionController {
     }
 
     /**
+     * get question list by up id
+     *
+     * @param id up id
+     * @return question item list
+     */
+    @GetMapping("/up")
+    public BaseResponse<List<Question>> getQuestionListByUpId(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
+        questionQueryWrapper.eq("up_id", id);
+        return ResultUtils.success(questionService.list(questionQueryWrapper));
+    }
+
+    /**
      * get question list by topic name
      *
      * @param topic topic name
