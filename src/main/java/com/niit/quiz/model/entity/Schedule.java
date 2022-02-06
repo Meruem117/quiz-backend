@@ -55,13 +55,8 @@ public class Schedule implements Serializable {
     @TableField("length")
     private Integer length;
     /**
-     * is the round start: 1-round start, 0-round not start
+     * status: 0-not start, 1-start, 2-end
      */
-    @TableField("is_start")
-    private Integer isStart;
-    /**
-     * is the round end: 1-round end, 0-round not end
-     */
-    @TableField("is_end")
-    private Integer isEnd;
+    @TableField("status")
+    private Integer status;
 }

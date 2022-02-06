@@ -6,7 +6,7 @@ import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.ResultUtils;
 import com.niit.quiz.model.entity.Schedule;
-import com.niit.quiz.model.enums.ScheduleStatusEnum;
+import com.niit.quiz.model.enums.StatusEnum;
 import com.niit.quiz.service.ScheduleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,15 +64,14 @@ public class ScheduleController {
     }
 
     /**
-     * get quiz rounds that has started but not ended
+     * get quiz rounds that has started
      *
      * @return schedule item list
      */
     @GetMapping("/start")
     public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam int limit) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_start", ScheduleStatusEnum.START.getValue());
-        queryWrapper.eq("is_end", ScheduleStatusEnum.NOT_END.getValue());
+        queryWrapper.eq("status", StatusEnum.START.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
             queryWrapper.last(limitSql);
@@ -88,7 +87,7 @@ public class ScheduleController {
     @GetMapping("/end")
     public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam int limit) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_end", ScheduleStatusEnum.END.getValue());
+        queryWrapper.eq("status", StatusEnum.END.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
             queryWrapper.last(limitSql);
@@ -104,7 +103,7 @@ public class ScheduleController {
     @GetMapping("/remain")
     public BaseResponse<List<Schedule>> getScheduleRemainList(@RequestParam int limit) {
         QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_start", ScheduleStatusEnum.NOT_START.getValue());
+        queryWrapper.eq("status", StatusEnum.NOT_START.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
             queryWrapper.last(limitSql);
