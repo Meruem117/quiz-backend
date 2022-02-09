@@ -6,7 +6,7 @@ import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
-import com.niit.quiz.base.response.ResultUtils;
+import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Topic;
 import com.niit.quiz.service.TopicService;
 import org.springframework.web.bind.annotation.*;

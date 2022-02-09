@@ -1,4 +1,6 @@
-package com.niit.quiz.base.response;
+package com.niit.quiz.utils;
+
+import com.niit.quiz.base.response.BaseResponse;
 
 public class ResultUtils {
     /**

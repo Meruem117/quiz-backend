@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
-import com.niit.quiz.base.response.ResultUtils;
+import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Member;
 import com.niit.quiz.service.MemberService;
 import org.springframework.web.bind.annotation.GetMapping;

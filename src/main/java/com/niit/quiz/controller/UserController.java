@@ -10,7 +10,7 @@ import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.UserLoginRequest;
 import com.niit.quiz.base.request.UserSearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
-import com.niit.quiz.base.response.ResultUtils;
+import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.base.response.UserCheckResponse;
 import com.niit.quiz.model.entity.User;
 import com.niit.quiz.service.UserService;

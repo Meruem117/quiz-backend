@@ -14,4 +14,13 @@ public enum IsTeamEnum {
         return value;
     }
 
+    public static Boolean include(int value) {
+        for (IsTeamEnum isTeamEnum : IsTeamEnum.values()) {
+            if (isTeamEnum.getValue() == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

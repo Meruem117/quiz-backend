@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
-import com.niit.quiz.base.response.ResultUtils;
-import com.niit.quiz.model.entity.Result;
 import com.niit.quiz.model.enums.IsTeamEnum;
+import com.niit.quiz.utils.ResultUtils;
+import com.niit.quiz.model.entity.Result;
 import com.niit.quiz.service.ResultService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,36 +23,40 @@ public class ResultController {
     private ResultService resultService;
 
     /**
-     * get user result list by user id
+     * get result list by participant id
      *
-     * @param id user id
+     * @param id     participant id
+     * @param isTeam whether the participant is team
      * @return result item list
      */
-    @GetMapping("/users")
-    public BaseResponse<List<Result>> getUserResultListByUserId(@RequestParam int id) {
-        if (id < 1) {
+    @GetMapping("/list")
+    public BaseResponse<List<Result>> getUserResultListByUserId(@RequestParam int id, @RequestParam int isTeam) {
+        if (id < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
-        resultQueryWrapper.eq("is_team", IsTeamEnum.USER.getValue());
+        resultQueryWrapper.eq("is_team", isTeam);
         resultQueryWrapper.eq("participant_id", id);
         return ResultUtils.success(resultService.list(resultQueryWrapper));
     }
 
     /**
-     * get team result list by team id
+     * check whether the participant sign up for the quiz
      *
-     * @param id team id
-     * @return result item list
+     * @param scheduleId    schedule id
+     * @param participantId participant id
+     * @param isTeam        whether the participant is team
+     * @return check boolean result
      */
-    @GetMapping("/teams")
-    public BaseResponse<List<Result>> getTeamResultListByTeamId(@RequestParam int id) {
-        if (id < 1) {
+    @GetMapping("/check")
+    public BaseResponse<Boolean> checkParticipant(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
+        if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
-        resultQueryWrapper.eq("is_team", IsTeamEnum.TEAM.getValue());
-        resultQueryWrapper.eq("participant_id", id);
-        return ResultUtils.success(resultService.list(resultQueryWrapper));
+        resultQueryWrapper.eq("is_team", isTeam);
+        resultQueryWrapper.eq("schedule_id", scheduleId);
+        resultQueryWrapper.eq("participant_id", participantId);
+        return ResultUtils.success(resultService.count(resultQueryWrapper) == 1);
     }
 }

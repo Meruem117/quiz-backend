@@ -3,7 +3,7 @@ package com.niit.quiz.controller;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
-import com.niit.quiz.base.response.ResultUtils;
+import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Quiz;
 import com.niit.quiz.service.QuizService;
 import org.springframework.web.bind.annotation.GetMapping;
