@@ -3,7 +3,6 @@ package com.niit.quiz.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
-import com.niit.quiz.base.request.ResultAttendRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.enums.IsTeamEnum;
 import com.niit.quiz.utils.ResultUtils;
@@ -39,16 +38,15 @@ public class ResultController {
     }
 
     /**
-     * get result item by schedule id and participant id
+     * get attend result
      *
-     * @param request result attend request
+     * @param scheduleId    schedule id
+     * @param participantId participant id
+     * @param isTeam        whether the participant is team
      * @return result item
      */
-    @PostMapping("/attend")
-    public BaseResponse<Result> getAttendResult(@RequestBody ResultAttendRequest resultAttendRequest) {
-        int scheduleId = resultAttendRequest.getScheduleId();
-        int participantId = resultAttendRequest.getParticipantId();
-        int isTeam = resultAttendRequest.getIsTeam();
+    @GetMapping("/attend")
+    public BaseResponse<Result> getResultAttend(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
