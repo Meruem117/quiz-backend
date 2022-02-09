@@ -3,15 +3,13 @@ package com.niit.quiz.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
+import com.niit.quiz.base.request.ResultAttendRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.enums.IsTeamEnum;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Result;
 import com.niit.quiz.service.ResultService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,15 +39,16 @@ public class ResultController {
     }
 
     /**
-     * check whether the participant sign up for the quiz
+     * get result item by schedule id and participant id
      *
-     * @param scheduleId    schedule id
-     * @param participantId participant id
-     * @param isTeam        whether the participant is team
-     * @return check boolean result
+     * @param request result attend request
+     * @return result item
      */
-    @GetMapping("/get")
-    public BaseResponse<Result> getResultByScheduleAndParticipant(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
+    @PostMapping("/attend")
+    public BaseResponse<Result> getAttendResult(@RequestBody ResultAttendRequest resultAttendRequest) {
+        int scheduleId = resultAttendRequest.getScheduleId();
+        int participantId = resultAttendRequest.getParticipantId();
+        int isTeam = resultAttendRequest.getIsTeam();
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
