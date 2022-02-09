@@ -48,8 +48,8 @@ public class ResultController {
      * @param isTeam        whether the participant is team
      * @return check boolean result
      */
-    @GetMapping("/check")
-    public BaseResponse<Boolean> checkParticipant(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
+    @GetMapping("/get")
+    public BaseResponse<Result> getResultByScheduleAndParticipant(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -57,6 +57,6 @@ public class ResultController {
         resultQueryWrapper.eq("is_team", isTeam);
         resultQueryWrapper.eq("schedule_id", scheduleId);
         resultQueryWrapper.eq("participant_id", participantId);
-        return ResultUtils.success(resultService.count(resultQueryWrapper) == 1);
+        return ResultUtils.success(resultService.getOne(resultQueryWrapper));
     }
 }
