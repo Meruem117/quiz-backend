@@ -38,7 +38,7 @@ public class ResultController {
     }
 
     /**
-     * get attend result
+     * get result item when attend a quiz round
      *
      * @param scheduleId    schedule id
      * @param participantId participant id
@@ -46,7 +46,7 @@ public class ResultController {
      * @return result item
      */
     @GetMapping("/attend")
-    public BaseResponse<Result> getResultAttend(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
+    public BaseResponse<Result> getResultWhenAttend(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
