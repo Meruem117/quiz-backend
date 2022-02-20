@@ -60,6 +60,11 @@ public class Result implements Serializable {
     @TableField("status")
     private Integer status;
     /**
+     * isTake: 0-not take, 1-take
+     */
+    @TableField("is_take")
+    private Integer isTake;
+    /**
      * correct answer count
      */
     @TableField("correct")
