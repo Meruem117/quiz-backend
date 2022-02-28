@@ -27,7 +27,7 @@ public class ResultController {
      * @return result item list
      */
     @GetMapping("/list")
-    public BaseResponse<List<Result>> getUserResultListByUserId(@RequestParam int id, @RequestParam int isTeam) {
+    public BaseResponse<List<Result>> getResultListByParticipantId(@RequestParam int id, @RequestParam int isTeam) {
         if (id < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
