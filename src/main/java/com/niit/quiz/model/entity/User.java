@@ -35,11 +35,6 @@ public class User implements Serializable {
     @TableField("password")
     private String password;
     /**
-     * role: 2-root, 1-admin, 0-user
-     */
-    @TableField("role")
-    private Integer role;
-    /**
      * gender
      */
     @TableField("gender")
