@@ -18,6 +18,7 @@
         <java.version>1.8</java.version>
         <druid.starter.version>1.1.10.2</druid.starter.version>
         <mybatis-plus.starter.version>3.4.3.4</mybatis-plus.starter.version>
+        <springfox-boot.starter.version>3.0.0</springfox-boot.starter.version>
     </properties>
 
     <dependencies>
@@ -52,6 +53,11 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox-boot.starter.version}</version>
         </dependency>
     </dependencies>
 
