@@ -1,5 +1,6 @@
 package com.niit.quiz.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
@@ -42,5 +43,21 @@ public class TeamController {
     @GetMapping("/list")
     public BaseResponse<List<Team>> getTeamList() {
         return ResultUtils.success(teamService.list());
+    }
+
+    /**
+     * get team list by leader id
+     *
+     * @param id leader id
+     * @return team item list
+     */
+    @GetMapping("/leader")
+    public BaseResponse<List<Team>> getTeamListByLeaderId(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+        teamQueryWrapper.eq("leader_id", id);
+        return ResultUtils.success(teamService.list(teamQueryWrapper));
     }
 }
