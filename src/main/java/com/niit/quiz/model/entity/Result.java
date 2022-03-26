@@ -75,10 +75,15 @@ public class Result implements Serializable {
     @TableField("correct_rate")
     private Integer correctRate;
     /**
-     * error question list, max 30 questions
+     * answer list, max 30
      */
-    @TableField("error_list")
-    private String errorList;
+    @TableField("answers")
+    private String answers;
+    /**
+     * error question list, max 30
+     */
+    @TableField("errors")
+    private String errors;
     /**
      * is out or not: 1-out, 0-not out
      */
