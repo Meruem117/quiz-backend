@@ -20,6 +20,11 @@ public class Admin implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
+     * email
+     */
+    @TableField("email")
+    private String email;
+    /**
      * name
      */
     @TableField("name")
@@ -29,11 +34,6 @@ public class Admin implements Serializable {
      */
     @TableField("password")
     private String password;
-    /**
-     * email
-     */
-    @TableField("email")
-    private String email;
     /**
      * create time
      */
