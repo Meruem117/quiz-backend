@@ -67,8 +67,8 @@ public class UserController {
         return ResultUtils.success(new PasswordCheckResponse(check, user));
     }
 
-    @PostMapping("/insert")
-    public BaseResponse<Integer> insertUser(@RequestBody User user) {
+    @PostMapping("/add")
+    public BaseResponse<Integer> addUser(@RequestBody User user) {
         if (user == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -93,7 +93,7 @@ public class UserController {
     }
 
     @PostMapping("/search")
-    public BaseResponse<IPage<User>> getUserList(UserSearchRequest request) {
+    public BaseResponse<IPage<User>> getUserSearchList(UserSearchRequest request) {
         int pageNum = request.getPageNum();
         int pageSize = request.getPageSize();
         String name = request.getName();
