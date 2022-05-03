@@ -7,11 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
-import com.niit.quiz.base.request.UserLoginRequest;
+import com.niit.quiz.base.request.LoginRequest;
 import com.niit.quiz.base.request.UserSearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.utils.ResultUtils;
-import com.niit.quiz.base.response.UserCheckResponse;
+import com.niit.quiz.base.response.PasswordCheckResponse;
 import com.niit.quiz.model.entity.User;
 import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -57,14 +57,14 @@ public class UserController {
      * @return check result
      */
     @PostMapping("check")
-    public BaseResponse<UserCheckResponse> checkUserPassword(@RequestBody UserLoginRequest request) {
+    public BaseResponse<PasswordCheckResponse> checkUserPassword(@RequestBody LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("email", email);
         User user = userService.getOne(queryWrapper);
         Boolean check = Objects.equals(password, user.getPassword());
-        return ResultUtils.success(new UserCheckResponse(check, user));
+        return ResultUtils.success(new PasswordCheckResponse(check, user));
     }
 
     @PostMapping("/insert")

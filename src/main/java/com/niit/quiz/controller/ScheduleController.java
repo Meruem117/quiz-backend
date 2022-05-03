@@ -57,10 +57,10 @@ public class ScheduleController {
         if (quizId < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("quiz_id", quizId);
-        queryWrapper.orderByAsc("round");
-        return ResultUtils.success(scheduleService.list(queryWrapper));
+        QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
+        scheduleQueryWrapper.eq("quiz_id", quizId);
+        scheduleQueryWrapper.orderByAsc("round");
+        return ResultUtils.success(scheduleService.list(scheduleQueryWrapper));
     }
 
     /**
@@ -70,13 +70,13 @@ public class ScheduleController {
      */
     @GetMapping("/start")
     public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam int limit) {
-        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("status", StatusEnum.START.getValue());
+        QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
+        scheduleQueryWrapper.eq("status", StatusEnum.START.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
-            queryWrapper.last(limitSql);
+            scheduleQueryWrapper.last(limitSql);
         }
-        return ResultUtils.success(scheduleService.list(queryWrapper));
+        return ResultUtils.success(scheduleService.list(scheduleQueryWrapper));
     }
 
     /**
@@ -86,13 +86,13 @@ public class ScheduleController {
      */
     @GetMapping("/end")
     public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam int limit) {
-        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("status", StatusEnum.END.getValue());
+        QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
+        scheduleQueryWrapper.eq("status", StatusEnum.END.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
-            queryWrapper.last(limitSql);
+            scheduleQueryWrapper.last(limitSql);
         }
-        return ResultUtils.success(scheduleService.list(queryWrapper));
+        return ResultUtils.success(scheduleService.list(scheduleQueryWrapper));
     }
 
     /**
@@ -102,12 +102,12 @@ public class ScheduleController {
      */
     @GetMapping("/remain")
     public BaseResponse<List<Schedule>> getScheduleRemainList(@RequestParam int limit) {
-        QueryWrapper<Schedule> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("status", StatusEnum.NOT_START.getValue());
+        QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
+        scheduleQueryWrapper.eq("status", StatusEnum.NOT_START.getValue());
         if (limit > 0) {
             String limitSql = "limit " + limit;
-            queryWrapper.last(limitSql);
+            scheduleQueryWrapper.last(limitSql);
         }
-        return ResultUtils.success(scheduleService.list(queryWrapper));
+        return ResultUtils.success(scheduleService.list(scheduleQueryWrapper));
     }
 }

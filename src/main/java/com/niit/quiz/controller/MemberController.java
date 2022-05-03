@@ -32,9 +32,9 @@ public class MemberController {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", id);
-        return ResultUtils.success(memberService.list(queryWrapper));
+        QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
+        memberQueryWrapper.eq("user_id", id);
+        return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
     /**
@@ -48,8 +48,8 @@ public class MemberController {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("team_id", id);
-        return ResultUtils.success(memberService.list(queryWrapper));
+        QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
+        memberQueryWrapper.eq("team_id", id);
+        return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 }

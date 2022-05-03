@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserCheckResponse {
+public class PasswordCheckResponse {
     private Boolean check;
     private User userInfo;
 }
