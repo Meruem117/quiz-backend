@@ -67,6 +67,12 @@ public class UserController {
         return ResultUtils.success(new PasswordCheckResponse(check, user));
     }
 
+    /**
+     * add user
+     *
+     * @param user user info
+     * @return user id
+     */
     @PostMapping("/add")
     public BaseResponse<Integer> addUser(@RequestBody User user) {
         if (user == null) {
@@ -76,6 +82,12 @@ public class UserController {
         return ResultUtils.success(user.getId());
     }
 
+    /**
+     * update user
+     *
+     * @param user user info
+     * @return update status
+     */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateUser(@RequestBody User user) {
         if (user == null) {
@@ -84,6 +96,12 @@ public class UserController {
         return ResultUtils.success(userService.updateById(user));
     }
 
+    /**
+     * logical delete user
+     *
+     * @param deleteRequest user id
+     * @return delete status
+     */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest) {
         if (deleteRequest == null || deleteRequest.getId() < 1) {
