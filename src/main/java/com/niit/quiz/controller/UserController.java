@@ -8,10 +8,10 @@ import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.LoginRequest;
-import com.niit.quiz.base.request.UserSearchRequest;
+import com.niit.quiz.base.request.SearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.utils.ResultUtils;
-import com.niit.quiz.base.response.PasswordCheckResponse;
+import com.niit.quiz.base.response.CheckResponse;
 import com.niit.quiz.model.entity.User;
 import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -61,14 +61,14 @@ public class UserController {
      * @return check result
      */
     @PostMapping("/check")
-    public BaseResponse<PasswordCheckResponse> checkUserPassword(@RequestBody LoginRequest request) {
+    public BaseResponse<CheckResponse> checkUserPassword(@RequestBody LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("email", email);
         User user = userService.getOne(queryWrapper);
         Boolean check = Objects.equals(password, user.getPassword());
-        return ResultUtils.success(new PasswordCheckResponse(check, user));
+        return ResultUtils.success(new CheckResponse(check, user));
     }
 
     /**
@@ -115,19 +115,18 @@ public class UserController {
     }
 
     @PostMapping("/search")
-    public BaseResponse<IPage<User>> getUserSearchList(UserSearchRequest request) {
-        int pageNum = request.getPageNum();
-        int pageSize = request.getPageSize();
-        String name = request.getName();
+    public BaseResponse<IPage<User>> getUserSearchList(SearchRequest request) {
+        Integer pageNum = request.getPage();
+        Integer pageSize = request.getSize();
+        String key = request.getKey();
 
         if (pageNum < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        if (StringUtils.isNotBlank(name)) {
-            userQueryWrapper.like("name", name);
+        if (StringUtils.isNotBlank(key)) {
+            userQueryWrapper.like("name", key);
         }
-        userQueryWrapper.orderByDesc("createTime");
         return ResultUtils.success(userService.page(new Page<>(pageNum, pageSize), userQueryWrapper));
     }
 }
