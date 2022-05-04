@@ -10,6 +10,7 @@ import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.LoginRequest;
 import com.niit.quiz.base.request.SearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
+import com.niit.quiz.base.response.CheckInfo;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.base.response.CheckResponse;
 import com.niit.quiz.model.entity.User;
@@ -68,7 +69,8 @@ public class UserController {
         queryWrapper.eq("email", email);
         User user = userService.getOne(queryWrapper);
         Boolean check = Objects.equals(password, user.getPassword());
-        return ResultUtils.success(new CheckResponse(check, user));
+        CheckInfo info = new CheckInfo(user.getId(), user.getName(), user.getGender(), user.getLocation());
+        return ResultUtils.success(new CheckResponse(check, info));
     }
 
     /**

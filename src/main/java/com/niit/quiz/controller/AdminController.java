@@ -3,6 +3,7 @@ package com.niit.quiz.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.request.LoginRequest;
 import com.niit.quiz.base.response.BaseResponse;
+import com.niit.quiz.base.response.CheckInfo;
 import com.niit.quiz.base.response.CheckResponse;
 import com.niit.quiz.model.entity.Admin;
 import com.niit.quiz.service.AdminService;
@@ -35,6 +36,7 @@ public class AdminController {
         adminQueryWrapper.eq("email", email);
         Admin admin = adminService.getOne(adminQueryWrapper);
         Boolean check = Objects.equals(password, admin.getPassword());
-        return ResultUtils.success(new CheckResponse(check, null));
+        CheckInfo info = new CheckInfo(admin.getId(), admin.getName(), -1, "");
+        return ResultUtils.success(new CheckResponse(check, info));
     }
 }
