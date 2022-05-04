@@ -27,7 +27,7 @@ public class AdminController {
      * @param request email & password
      * @return check result
      */
-    @PostMapping("check")
+    @PostMapping("/check")
     public BaseResponse<PasswordCheckResponse> checkAdminPassword(@RequestBody LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();

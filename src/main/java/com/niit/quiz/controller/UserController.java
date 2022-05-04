@@ -60,7 +60,7 @@ public class UserController {
      * @param request email & password
      * @return check result
      */
-    @PostMapping("check")
+    @PostMapping("/check")
     public BaseResponse<PasswordCheckResponse> checkUserPassword(@RequestBody LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
