@@ -37,7 +37,11 @@ public class UserController {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        return ResultUtils.success(userService.getById(id));
+        User user = userService.getById(id);
+        if (user == null) {
+            return ResultUtils.error("This user has been cancelled");
+        }
+        return ResultUtils.success(user);
     }
 
     /**

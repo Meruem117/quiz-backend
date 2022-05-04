@@ -13,7 +13,7 @@ public class ResultUtils {
     /**
      * error
      */
-    public static <T> BaseResponse<T> error(int code, String errorMessage) {
-        return new BaseResponse<>(code, null, errorMessage);
+    public static <T> BaseResponse<T> error(String errorMessage) {
+        return new BaseResponse<>(400, null, errorMessage);
     }
 }

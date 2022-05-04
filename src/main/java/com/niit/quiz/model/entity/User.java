@@ -50,6 +50,6 @@ public class User implements Serializable {
      * deleted - logical delete
      */
     @TableLogic
-    @TableField(value = "deleted", fill = FieldFill.INSERT)
+    @TableField(value = "deleted", fill = FieldFill.INSERT, select = false)
     private Integer deleted;
 }
