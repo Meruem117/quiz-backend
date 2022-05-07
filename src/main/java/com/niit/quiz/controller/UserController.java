@@ -116,6 +116,12 @@ public class UserController {
         return ResultUtils.success(userService.removeById(deleteRequest.getId()));
     }
 
+    /**
+     * get users with pagination
+     *
+     * @param request search request
+     * @return user item list with pagination
+     */
     @PostMapping("/page")
     public BaseResponse<IPage<User>> getUserSearchList(SearchRequest request) {
         Integer page = request.getPage();

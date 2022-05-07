@@ -31,9 +31,10 @@ public class TopicController {
     }
 
     /**
-     * get topic pages
+     * get topics with pagination
      *
-     * @return topic item pages
+     * @param pageRequest page request
+     * @return topic item list with pagination
      */
     @GetMapping("/page")
     public BaseResponse<IPage<Topic>> getTopicPages(PageRequest pageRequest) {
