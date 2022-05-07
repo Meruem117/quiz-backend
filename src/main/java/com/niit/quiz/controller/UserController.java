@@ -123,8 +123,8 @@ public class UserController {
      * @param pageRequest page request
      * @return user item list with pagination
      */
-    @PostMapping("/page")
-    public BaseResponse<IPage<User>> getUserSearchList(PageRequest pageRequest) {
+    @GetMapping("/page")
+    public BaseResponse<IPage<User>> getUserPages(PageRequest pageRequest) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
 
