@@ -8,6 +8,7 @@ import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.LoginRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.request.SearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.CheckInfo;
@@ -119,22 +120,21 @@ public class UserController {
     /**
      * get users with pagination
      *
-     * @param request search request
+     * @param pageRequest page request
      * @return user item list with pagination
      */
     @PostMapping("/page")
-    public BaseResponse<IPage<User>> getUserSearchList(SearchRequest request) {
-        Integer page = request.getPage();
-        Integer size = request.getSize();
-        String key = request.getKey();
+    public BaseResponse<IPage<User>> getUserSearchList(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
 
         if (page < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        if (StringUtils.isNotBlank(key)) {
-            userQueryWrapper.like("name", key);
-        }
+//        if (StringUtils.isNotBlank(key)) {
+//            userQueryWrapper.like("name", key);
+//        }
         return ResultUtils.success(userService.page(new Page<>(page, size), userQueryWrapper));
     }
 }
