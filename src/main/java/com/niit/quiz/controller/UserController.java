@@ -116,19 +116,19 @@ public class UserController {
         return ResultUtils.success(userService.removeById(deleteRequest.getId()));
     }
 
-    @PostMapping("/search")
+    @PostMapping("/page")
     public BaseResponse<IPage<User>> getUserSearchList(SearchRequest request) {
-        Integer pageNum = request.getPage();
-        Integer pageSize = request.getSize();
+        Integer page = request.getPage();
+        Integer size = request.getSize();
         String key = request.getKey();
 
-        if (pageNum < 1) {
+        if (page < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(key)) {
             userQueryWrapper.like("name", key);
         }
-        return ResultUtils.success(userService.page(new Page<>(pageNum, pageSize), userQueryWrapper));
+        return ResultUtils.success(userService.page(new Page<>(page, size), userQueryWrapper));
     }
 }

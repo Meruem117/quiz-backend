@@ -37,12 +37,12 @@ public class TopicController {
      */
     @GetMapping("/page")
     public BaseResponse<IPage<Topic>> getTopicPages(PageRequest pageRequest) {
-        int pageNum = pageRequest.getPageNum();
-        int pageSize = pageRequest.getPageSize();
-        if (pageNum < 1) {
+        int page = pageRequest.getPage();
+        int size = pageRequest.getSize();
+        if (page < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        Page<Topic> topicPage = new Page<>(pageNum, pageSize);
+        Page<Topic> topicPage = new Page<>(page, size);
         return ResultUtils.success(topicService.page(topicPage));
     }
 }
