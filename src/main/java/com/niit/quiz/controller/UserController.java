@@ -9,7 +9,6 @@ import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.LoginRequest;
 import com.niit.quiz.base.request.PageRequest;
-import com.niit.quiz.base.request.SearchRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.CheckInfo;
 import com.niit.quiz.utils.ResultUtils;
@@ -59,7 +58,7 @@ public class UserController {
     /**
      * check user password
      *
-     * @param request email & password
+     * @param request login request - email & password
      * @return check result
      */
     @PostMapping("/check")
@@ -124,7 +123,7 @@ public class UserController {
      * @return user item list with pagination
      */
     @GetMapping("/page")
-    public BaseResponse<IPage<User>> getUserPages(PageRequest pageRequest) {
+    public BaseResponse<IPage<User>> getUserPages(PageRequest pageRequest, String key) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
 
@@ -132,9 +131,9 @@ public class UserController {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-//        if (StringUtils.isNotBlank(key)) {
-//            userQueryWrapper.like("name", key);
-//        }
+        if (StringUtils.isNotBlank(key)) {
+            userQueryWrapper.like("name", key);
+        }
         return ResultUtils.success(userService.page(new Page<>(page, size), userQueryWrapper));
     }
 }
