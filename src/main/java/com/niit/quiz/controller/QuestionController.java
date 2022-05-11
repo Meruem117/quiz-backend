@@ -1,6 +1,7 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.response.BaseResponse;
@@ -65,7 +66,9 @@ public class QuestionController {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
-        questionQueryWrapper.eq("topic", topic);
+        if (StringUtils.isNotBlank(topic)) {
+            questionQueryWrapper.eq("topic", topic);
+        }
         return ResultUtils.success(questionService.list(questionQueryWrapper));
     }
 
