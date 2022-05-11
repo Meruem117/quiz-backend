@@ -18,6 +18,8 @@ import com.niit.quiz.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,6 +86,9 @@ public class UserController {
         if (user == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String date = df.format(new Date());
+        user.setCreateTime(date);
         userService.save(user);
         return ResultUtils.success(user.getId());
     }
