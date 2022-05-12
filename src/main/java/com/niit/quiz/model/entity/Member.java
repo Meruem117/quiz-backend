@@ -1,9 +1,6 @@
 package com.niit.quiz.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -44,4 +41,10 @@ public class Member implements Serializable {
      */
     @TableField("join_time")
     private String joinTime;
+    /**
+     * deleted - logical delete
+     */
+    @TableLogic
+    @TableField(value = "deleted", fill = FieldFill.INSERT, select = false)
+    private Integer deleted;
 }
