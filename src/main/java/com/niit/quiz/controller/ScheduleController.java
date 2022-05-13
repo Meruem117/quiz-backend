@@ -3,15 +3,14 @@ package com.niit.quiz.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
+import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.response.BaseResponse;
+import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Schedule;
 import com.niit.quiz.model.enums.StatusEnum;
 import com.niit.quiz.service.ScheduleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -109,5 +108,50 @@ public class ScheduleController {
             scheduleQueryWrapper.last(limitSql);
         }
         return ResultUtils.success(scheduleService.list(scheduleQueryWrapper));
+    }
+
+    /**
+     * add schedule
+     *
+     * @param schedule schedule item
+     * @return schedule id
+     */
+    @PostMapping("/add")
+    public BaseResponse<Integer> addSchedule(@RequestBody Schedule schedule) {
+        if (schedule == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        String date = DateUtils.getCurrentDateTime();
+        schedule.setCreateTime(date);
+        scheduleService.save(schedule);
+        return ResultUtils.success(schedule.getId());
+    }
+
+    /**
+     * update schedule
+     *
+     * @param schedule schedule item
+     * @return update status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updateSchedule(@RequestBody Schedule schedule) {
+        if (schedule == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(scheduleService.updateById(schedule));
+    }
+
+    /**
+     * logical delete schedule
+     *
+     * @param deleteRequest schedule id
+     * @return delete status
+     */
+    @PostMapping("/delete")
+    public BaseResponse<Boolean> deleteSchedule(@RequestBody DeleteRequest deleteRequest) {
+        if (deleteRequest == null || deleteRequest.getId() < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(scheduleService.removeById(deleteRequest.getId()));
     }
 }

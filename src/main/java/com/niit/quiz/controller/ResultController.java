@@ -3,10 +3,12 @@ package com.niit.quiz.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
+import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.response.BaseResponse;
-import com.niit.quiz.model.enums.IsTeamEnum;
-import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Result;
+import com.niit.quiz.model.enums.IsTeamEnum;
+import com.niit.quiz.utils.DateUtils;
+import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.service.ResultService;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,5 +57,50 @@ public class ResultController {
         resultQueryWrapper.eq("schedule_id", scheduleId);
         resultQueryWrapper.eq("participant_id", participantId);
         return ResultUtils.success(resultService.getOne(resultQueryWrapper));
+    }
+
+    /**
+     * add result
+     *
+     * @param result result item
+     * @return result id
+     */
+    @PostMapping("/add")
+    public BaseResponse<Integer> addResult(@RequestBody Result result) {
+        if (result == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        String datetime = DateUtils.getCurrentDateTime();
+        result.setCreateTime(datetime);
+        resultService.save(result);
+        return ResultUtils.success(result.getId());
+    }
+
+    /**
+     * update result
+     *
+     * @param result result item
+     * @return update status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updateResult(@RequestBody Result result) {
+        if (result == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(resultService.updateById(result));
+    }
+
+    /**
+     * logical delete result
+     *
+     * @param deleteRequest result id
+     * @return delete status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> deleteResult(@RequestBody DeleteRequest deleteRequest) {
+        if (deleteRequest == null || deleteRequest.getId() < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(resultService.removeById(deleteRequest.getId()));
     }
 }

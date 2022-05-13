@@ -60,8 +60,8 @@ public class TopicController {
         if (topic == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        String datetime = DateUtils.getCurrentDateTime();
-        topic.setCreateTime(datetime);
+        String date = DateUtils.getCurrentDate();
+        topic.setCreateTime(date);
         topicService.save(topic);
         return ResultUtils.success(topic.getId());
     }

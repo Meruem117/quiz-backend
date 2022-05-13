@@ -4,14 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
+import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.response.BaseResponse;
+import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Question;
 import com.niit.quiz.service.QuestionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -73,12 +72,12 @@ public class QuestionController {
     }
 
     /**
-     * get question list by question of schedule
+     * get question list by question of question
      *
-     * @param question question of schedule
+     * @param question question of question
      * @return question list
      */
-    @GetMapping("/schedule")
+    @GetMapping("/question")
     public BaseResponse<List<Question>> getQuestionListBySchedule(@RequestParam String question) {
         String[] array = question.split("-");
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
@@ -88,5 +87,50 @@ public class QuestionController {
         }
         questionQueryWrapper.in("id", ids);
         return ResultUtils.success(questionService.list(questionQueryWrapper));
+    }
+
+    /**
+     * add question
+     *
+     * @param question question item
+     * @return question id
+     */
+    @PostMapping("/add")
+    public BaseResponse<Integer> addQuestion(@RequestBody Question question) {
+        if (question == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        String date = DateUtils.getCurrentDateTime();
+        question.setCreateTime(date);
+        questionService.save(question);
+        return ResultUtils.success(question.getId());
+    }
+
+    /**
+     * update question
+     *
+     * @param question question item
+     * @return update status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updateQuestion(@RequestBody Question question) {
+        if (question == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(questionService.updateById(question));
+    }
+
+    /**
+     * logical delete question
+     *
+     * @param deleteRequest question id
+     * @return delete status
+     */
+    @PostMapping("/delete")
+    public BaseResponse<Boolean> deleteQuestion(@RequestBody DeleteRequest deleteRequest) {
+        if (deleteRequest == null || deleteRequest.getId() < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(questionService.removeById(deleteRequest.getId()));
     }
 }
