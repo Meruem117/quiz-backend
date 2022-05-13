@@ -57,6 +57,11 @@ public class Schedule implements Serializable {
     @TableField("status")
     private Integer status;
     /**
+     * create time
+     */
+    @TableField("create_time")
+    private String createTime;
+    /**
      * deleted - logical delete
      */
     @TableLogic

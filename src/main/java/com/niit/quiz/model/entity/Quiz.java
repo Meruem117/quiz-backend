@@ -62,6 +62,11 @@ public class Quiz implements Serializable {
     @TableField("is_team")
     private Integer isTeam;
     /**
+     * create time
+     */
+    @TableField("create_time")
+    private String createTime;
+    /**
      * deleted - logical delete
      */
     @TableLogic

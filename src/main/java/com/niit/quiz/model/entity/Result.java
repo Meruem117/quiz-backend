@@ -87,6 +87,11 @@ public class Result implements Serializable {
     @TableField("is_out")
     private Integer isOut;
     /**
+     * create time
+     */
+    @TableField("create_time")
+    private String createTime;
+    /**
      * deleted - logical delete
      */
     @TableLogic
