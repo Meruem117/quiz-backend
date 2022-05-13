@@ -11,6 +11,7 @@ import com.niit.quiz.base.request.LoginRequest;
 import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.CheckInfo;
+import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.base.response.CheckResponse;
 import com.niit.quiz.model.entity.User;
@@ -76,9 +77,30 @@ public class UserController {
     }
 
     /**
+     * get users with pagination
+     *
+     * @param pageRequest page request
+     * @return user item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<User>> getUserPages(PageRequest pageRequest, String key) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+
+        if (page < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        if (StringUtils.isNotBlank(key)) {
+            userQueryWrapper.like("name", key);
+        }
+        return ResultUtils.success(userService.page(new Page<>(page, size), userQueryWrapper));
+    }
+
+    /**
      * add user
      *
-     * @param user user info
+     * @param user user item
      * @return user id
      */
     @PostMapping("/add")
@@ -86,8 +108,7 @@ public class UserController {
         if (user == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        String date = df.format(new Date());
+        String date = DateUtils.getCurrentDateTime();
         user.setCreateTime(date);
         userService.save(user);
         return ResultUtils.success(user.getId());
@@ -96,7 +117,7 @@ public class UserController {
     /**
      * update user
      *
-     * @param user user info
+     * @param user user item
      * @return update status
      */
     @PostMapping("/update")
@@ -119,26 +140,5 @@ public class UserController {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(userService.removeById(deleteRequest.getId()));
-    }
-
-    /**
-     * get users with pagination
-     *
-     * @param pageRequest page request
-     * @return user item list with pagination
-     */
-    @GetMapping("/page")
-    public BaseResponse<IPage<User>> getUserPages(PageRequest pageRequest, String key) {
-        Integer page = pageRequest.getPage();
-        Integer size = pageRequest.getSize();
-
-        if (page < 1) {
-            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
-        }
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-        if (StringUtils.isNotBlank(key)) {
-            userQueryWrapper.like("name", key);
-        }
-        return ResultUtils.success(userService.page(new Page<>(page, size), userQueryWrapper));
     }
 }

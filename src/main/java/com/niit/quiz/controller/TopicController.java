@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
+import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
+import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Topic;
 import com.niit.quiz.service.TopicService;
@@ -45,5 +47,50 @@ public class TopicController {
         }
         Page<Topic> topicPage = new Page<>(page, size);
         return ResultUtils.success(topicService.page(topicPage));
+    }
+
+    /**
+     * add topic
+     *
+     * @param topic topic item
+     * @return topic id
+     */
+    @PostMapping("/add")
+    public BaseResponse<Integer> addTopic(@RequestBody Topic topic) {
+        if (topic == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        String datetime = DateUtils.getCurrentDateTime();
+        topic.setCreateTime(datetime);
+        topicService.save(topic);
+        return ResultUtils.success(topic.getId());
+    }
+
+    /**
+     * update topic
+     *
+     * @param topic topic item
+     * @return update status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updateTopic(@RequestBody Topic topic) {
+        if (topic == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(topicService.updateById(topic));
+    }
+
+    /**
+     * logical delete topic
+     *
+     * @param deleteRequest topic id
+     * @return delete status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> deleteTopic(@RequestBody DeleteRequest deleteRequest) {
+        if (deleteRequest == null || deleteRequest.getId() < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(topicService.removeById(deleteRequest.getId()));
     }
 }
