@@ -27,6 +27,11 @@ public class Topic implements Serializable {
     @TableField("description")
     private String description;
     /**
+     * create time
+     */
+    @TableField("create_time")
+    private String createTime;
+    /**
      * deleted - logical delete
      */
     @TableLogic
