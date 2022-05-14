@@ -5,13 +5,13 @@ public enum StatusEnum {
     START(1),
     END(2);
 
-    private final int value;
+    private final Integer value;
 
-    StatusEnum(int value) {
+    StatusEnum(Integer value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 }
