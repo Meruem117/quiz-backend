@@ -37,10 +37,20 @@ public class Member implements Serializable {
     @TableField("user_name")
     private String userName;
     /**
+     * is passed: 1 - pass, 0 - not pass
+     */
+    @TableField("pass")
+    private Integer pass;
+    /**
      * join time
      */
     @TableField("join_time")
     private String joinTime;
+    /**
+     * create time
+     */
+    @TableField("create_time")
+    private String createTime;
     /**
      * deleted - logical delete
      */
