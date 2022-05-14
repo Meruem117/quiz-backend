@@ -37,10 +37,10 @@ public class Member implements Serializable {
     @TableField("user_name")
     private String userName;
     /**
-     * is passed: 1 - pass, 0 - not pass
+     * is passed: 0 - pending, 1 - pass, 2 - not pass
      */
-    @TableField("pass")
-    private Integer pass;
+    @TableField(value = "pass", fill = FieldFill.INSERT)
+    private String pass;
     /**
      * join time
      */
