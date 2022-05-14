@@ -86,7 +86,7 @@ public class TopicController {
      * @param deleteRequest topic id
      * @return delete status
      */
-    @PostMapping("/update")
+    @PostMapping("/delete")
     public BaseResponse<Boolean> deleteTopic(@RequestBody DeleteRequest deleteRequest) {
         if (deleteRequest == null || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);

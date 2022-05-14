@@ -1,5 +1,7 @@
 package com.niit.quiz.model.enums;
 
+import java.util.Objects;
+
 public enum PassEnum {
     PENDING("0"),
     PASS("1"),
@@ -13,5 +15,14 @@ public enum PassEnum {
 
     public String getValue() {
         return value;
+    }
+
+    public static Boolean include(String value) {
+        for (PassEnum passEnum : PassEnum.values()) {
+            if (Objects.equals(passEnum.getValue(), value)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

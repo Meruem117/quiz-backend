@@ -96,7 +96,7 @@ public class ResultController {
      * @param deleteRequest result id
      * @return delete status
      */
-    @PostMapping("/update")
+    @PostMapping("/delete")
     public BaseResponse<Boolean> deleteResult(@RequestBody DeleteRequest deleteRequest) {
         if (deleteRequest == null || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);

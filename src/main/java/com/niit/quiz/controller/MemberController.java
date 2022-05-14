@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PassRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.entity.Member;
+import com.niit.quiz.model.enums.PassEnum;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.service.MemberService;
@@ -33,6 +35,7 @@ public class MemberController {
         }
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("user_id", id);
+        memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
         return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
@@ -49,6 +52,7 @@ public class MemberController {
         }
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("team_id", id);
+        memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
         return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
@@ -67,6 +71,24 @@ public class MemberController {
         member.setJoinTime(date);
         memberService.save(member);
         return ResultUtils.success(member.getId());
+    }
+
+    /**
+     * pass member application
+     *
+     * @param passRequest pass request
+     * @return pass status
+     */
+    @PostMapping("/pass")
+    public BaseResponse<Boolean> passMember(@RequestBody PassRequest passRequest) {
+        Integer id = passRequest.getId();
+        String pass = passRequest.getPass();
+        if (id < 1 || !PassEnum.include(pass)) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Member member = memberService.getById(id);
+        member.setPass(pass);
+        return ResultUtils.success(memberService.updateById(member));
     }
 
     /**
