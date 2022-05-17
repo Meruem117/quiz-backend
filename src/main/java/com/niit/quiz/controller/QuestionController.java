@@ -100,8 +100,9 @@ public class QuestionController {
         if (question == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        String date = DateUtils.getCurrentDateTime();
-        question.setCreateTime(date);
+        String datetime = DateUtils.getCurrentDateTime();
+        question.setCreateTime(datetime);
+        question.setUpdateTime(datetime);
         questionService.save(question);
         return ResultUtils.success(question.getId());
     }
@@ -117,6 +118,8 @@ public class QuestionController {
         if (question == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
+        String datetime = DateUtils.getCurrentDateTime();
+        question.setUpdateTime(datetime);
         return ResultUtils.success(questionService.updateById(question));
     }
 
