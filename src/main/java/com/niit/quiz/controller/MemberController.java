@@ -28,7 +28,7 @@ public class MemberController {
      * @param id user id
      * @return member item list
      */
-    @GetMapping("/member")
+    @GetMapping("/team")
     public BaseResponse<List<Member>> getTeamListByUserId(@RequestParam int id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
