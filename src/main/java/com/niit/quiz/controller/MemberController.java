@@ -40,9 +40,9 @@ public class MemberController {
     }
 
     /**
-     * get a member's members
+     * get a team's members
      *
-     * @param id member id
+     * @param id team id
      * @return member item list
      */
     @GetMapping("/user")
