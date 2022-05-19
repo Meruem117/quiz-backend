@@ -67,6 +67,11 @@ public class Question implements Serializable {
     @TableField("answer")
     private String answer;
     /**
+     * is passed: 0 - pending, 1 - pass, 2 - not pass
+     */
+    @TableField(value = "pass", fill = FieldFill.INSERT)
+    private String pass;
+    /**
      * create time
      */
     @TableField("create_time")

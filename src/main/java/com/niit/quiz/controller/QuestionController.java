@@ -6,6 +6,7 @@ import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.response.BaseResponse;
+import com.niit.quiz.model.enums.PassEnum;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.model.entity.Question;
@@ -68,18 +69,19 @@ public class QuestionController {
         if (StringUtils.isNotBlank(topic)) {
             questionQueryWrapper.eq("topic", topic);
         }
+        questionQueryWrapper.eq("pass", PassEnum.PASS.getValue());
         return ResultUtils.success(questionService.list(questionQueryWrapper));
     }
 
     /**
-     * get question list by question of question
+     * get question list by question of schedule
      *
-     * @param question question of question
+     * @param question question of schedule
      * @return question list
      */
     @GetMapping("/question")
     public BaseResponse<List<Question>> getQuestionListBySchedule(@RequestParam String question) {
-        String[] array = question.split("-");
+        String[] array = question.split(",");
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
         Collection<Integer> ids = new ArrayList<>();
         for (String id : array) {
