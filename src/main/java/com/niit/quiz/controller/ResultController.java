@@ -60,7 +60,7 @@ public class ResultController {
     }
 
     /**
-     * add result
+     * add result, sign up
      *
      * @param result result item
      * @return result id
@@ -71,6 +71,7 @@ public class ResultController {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String datetime = DateUtils.getCurrentDateTime();
+        result.setTakeTime(datetime);
         result.setCreateTime(datetime);
         resultService.save(result);
         return ResultUtils.success(result.getId());

@@ -72,7 +72,7 @@ public class ResultServiceTest {
         result.setParticipantName("M");
         result.setIsTeam(0);
         result.setCorrect(1);
-        result.setIsOut(1);
+        result.setIsOut("0");
         boolean res = resultService.save(result);
         Assert.isTrue(res, "");
     }

@@ -87,6 +87,11 @@ public class Result implements Serializable {
     @TableField(value = "is_out", fill = FieldFill.INSERT, select = false)
     private String isOut;
     /**
+     * take time
+     */
+    @TableField("take_time")
+    private String takeTime;
+    /**
      * create time
      */
     @TableField("create_time")
