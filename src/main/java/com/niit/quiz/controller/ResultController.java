@@ -22,6 +22,20 @@ public class ResultController {
     private ResultService resultService;
 
     /**
+     * get result by id
+     *
+     * @param id result id
+     * @return result item
+     */
+    @GetMapping("/get")
+    public BaseResponse<Result> getResultById(@RequestParam int id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(resultService.getById(id));
+    }
+
+    /**
      * get result list by participant id
      *
      * @param id     participant id
@@ -48,7 +62,8 @@ public class ResultController {
      * @return result item
      */
     @GetMapping("/attend")
-    public BaseResponse<Result> getResultWhenAttend(@RequestParam int scheduleId, @RequestParam int participantId, @RequestParam int isTeam) {
+    public BaseResponse<Result> getResultWhenAttend(@RequestParam int scheduleId, @RequestParam int participantId,
+                                                    @RequestParam int isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
