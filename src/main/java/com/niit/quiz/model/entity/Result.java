@@ -82,10 +82,10 @@ public class Result implements Serializable {
     @TableField("errors")
     private String errors;
     /**
-     * is out or not: 1-out, 0-not out
+     * is out or not: 0-pending, 1-not out, 2-out
      */
-    @TableField("is_out")
-    private Integer isOut;
+    @TableField(value = "is_out", fill = FieldFill.INSERT, select = false)
+    private String isOut;
     /**
      * create time
      */
