@@ -6,6 +6,7 @@ import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.entity.Result;
+import com.niit.quiz.model.enums.IsTakeEnum;
 import com.niit.quiz.model.enums.IsTeamEnum;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
@@ -90,6 +91,23 @@ public class ResultController {
         result.setCreateTime(datetime);
         resultService.save(result);
         return ResultUtils.success(result.getId());
+    }
+
+    /**
+     * submit result
+     *
+     * @param result result item
+     * @return submit status
+     */
+    @PostMapping("/submit")
+    public BaseResponse<Boolean> submitResult(@RequestBody Result result) {
+        if (result == null) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        String datetime = DateUtils.getCurrentDateTime();
+        result.setTakeTime(datetime);
+        result.setIsTake(IsTakeEnum.TAKE.getValue());
+        return ResultUtils.success(resultService.updateById(result));
     }
 
     /**
