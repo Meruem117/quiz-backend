@@ -80,7 +80,7 @@ public class QuestionController {
      * @param question question of schedule
      * @return question list
      */
-    @GetMapping("/question")
+    @GetMapping("/schedule")
     public BaseResponse<List<Question>> getQuestionListBySchedule(@RequestParam String question) {
         String[] array = question.split(",");
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
