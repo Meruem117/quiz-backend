@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PassRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.enums.PassEnum;
 import com.niit.quiz.utils.DateUtils;
@@ -107,6 +108,24 @@ public class QuestionController {
         question.setUpdateTime(datetime);
         questionService.save(question);
         return ResultUtils.success(question.getId());
+    }
+
+    /**
+     * pass question upload
+     *
+     * @param passRequest pass request
+     * @return pass status
+     */
+    @PostMapping("/pass")
+    public BaseResponse<Boolean> passQuestion(@RequestBody PassRequest passRequest) {
+        Integer id = passRequest.getId();
+        String pass = passRequest.getPass();
+        if (id < 1 || !PassEnum.include(pass)) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Question question = questionService.getById(id);
+        question.setPass(pass);
+        return ResultUtils.success(questionService.updateById(question));
     }
 
     /**
