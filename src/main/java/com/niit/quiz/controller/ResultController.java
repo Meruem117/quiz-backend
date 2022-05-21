@@ -95,11 +95,20 @@ public class ResultController {
         if (result == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        String datetime = DateUtils.getCurrentDateTime();
-        result.setTakeTime(datetime);
-        result.setCreateTime(datetime);
-        resultService.save(result);
-        return ResultUtils.success(result.getId());
+        QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
+        resultQueryWrapper.eq("is_team", result.getIsTeam());
+        resultQueryWrapper.eq("schedule_id", result.getScheduleId());
+        resultQueryWrapper.eq("participant_id", result.getParticipantId());
+        if (resultService.getOne(resultQueryWrapper) != null) {
+            return ResultUtils.error("This role has already signed up.");
+        } else {
+            String datetime = DateUtils.getCurrentDateTime();
+            result.setTakeTime(datetime);
+            result.setCreateTime(datetime);
+            result.setIsTake(IsTakeEnum.NOT_TAKE.getValue());
+            resultService.save(result);
+            return ResultUtils.success(result.getId());
+        }
     }
 
     /**
