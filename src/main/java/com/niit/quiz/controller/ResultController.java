@@ -72,7 +72,16 @@ public class ResultController {
         resultQueryWrapper.eq("is_team", isTeam);
         resultQueryWrapper.eq("schedule_id", scheduleId);
         resultQueryWrapper.eq("participant_id", participantId);
-        return ResultUtils.success(resultService.getOne(resultQueryWrapper));
+        Result result = resultService.getOne(resultQueryWrapper);
+        if (result != null) {
+            if (result.getIsTake().equals(IsTakeEnum.NOT_TAKE.getValue())) {
+                return ResultUtils.success(result);
+            } else {
+                return ResultUtils.error("This role has taken the current round.");
+            }
+        } else {
+            return ResultUtils.error("This role has not signed up for the quiz.");
+        }
     }
 
     /**
