@@ -85,6 +85,32 @@ public class ResultController {
     }
 
     /**
+     * review result of an ended quiz
+     *
+     * @param scheduleId    schedule id
+     * @param participantId participant id
+     * @param isTeam        whether the participant is team
+     * @return result item
+     */
+    @GetMapping("/attend")
+    public BaseResponse<Result> reviewResult(@RequestParam int scheduleId, @RequestParam int participantId,
+                                             @RequestParam int isTeam) {
+        if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
+        resultQueryWrapper.eq("is_team", isTeam);
+        resultQueryWrapper.eq("schedule_id", scheduleId);
+        resultQueryWrapper.eq("participant_id", participantId);
+        Result result = resultService.getOne(resultQueryWrapper);
+        if (result != null) {
+            return ResultUtils.success(result);
+        } else {
+            return ResultUtils.error("This role has not signed up for the quiz.");
+        }
+    }
+
+    /**
      * add result, sign up
      *
      * @param result result item
