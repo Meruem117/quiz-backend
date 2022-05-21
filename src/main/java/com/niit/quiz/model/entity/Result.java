@@ -84,7 +84,7 @@ public class Result implements Serializable {
     /**
      * is out or not: 0-pending, 1-not out, 2-out
      */
-    @TableField(value = "is_out", fill = FieldFill.INSERT, select = false)
+    @TableField("is_out")
     private String isOut;
     /**
      * take time

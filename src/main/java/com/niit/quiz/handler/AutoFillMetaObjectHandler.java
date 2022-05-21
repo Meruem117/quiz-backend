@@ -9,7 +9,6 @@ public class AutoFillMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.fillStrategy(metaObject, "is_out", "0");
         this.fillStrategy(metaObject, "pass", "0");
         this.fillStrategy(metaObject, "deleted", 0);
     }
