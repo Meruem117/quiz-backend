@@ -92,7 +92,7 @@ public class ResultController {
      * @param isTeam        whether the participant is team
      * @return result item
      */
-    @GetMapping("/attend")
+    @GetMapping("/review")
     public BaseResponse<Result> reviewResult(@RequestParam int scheduleId, @RequestParam int participantId,
                                              @RequestParam int isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
@@ -102,12 +102,7 @@ public class ResultController {
         resultQueryWrapper.eq("is_team", isTeam);
         resultQueryWrapper.eq("schedule_id", scheduleId);
         resultQueryWrapper.eq("participant_id", participantId);
-        Result result = resultService.getOne(resultQueryWrapper);
-        if (result != null) {
-            return ResultUtils.success(result);
-        } else {
-            return ResultUtils.error("This role has not signed up for the quiz.");
-        }
+        return ResultUtils.success(resultService.getOne(resultQueryWrapper));
     }
 
     /**
