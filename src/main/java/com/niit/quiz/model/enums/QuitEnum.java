@@ -1,12 +1,12 @@
 package com.niit.quiz.model.enums;
 
-public enum DeletedEnum {
-    DELETED(1),
-    NOT_DELETED(0);
+public enum QuitEnum {
+    QUIT(1),
+    NOT_QUIT(0);
 
     private final Integer value;
 
-    DeletedEnum(Integer value) {
+    QuitEnum(Integer value) {
         this.value = value;
     }
 
