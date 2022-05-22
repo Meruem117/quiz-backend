@@ -106,10 +106,16 @@ public class UserController {
         if (user == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        String date = DateUtils.getCurrentDateTime();
-        user.setCreateTime(date);
-        userService.save(user);
-        return ResultUtils.success(user.getId());
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("email", user.getEmail());
+        if (userService.getOne(userQueryWrapper) != null) {
+            return ResultUtils.error("This email has already been registered");
+        } else {
+            String date = DateUtils.getCurrentDate();
+            user.setCreateTime(date);
+            userService.save(user);
+            return ResultUtils.success(user.getId());
+        }
     }
 
     /**
