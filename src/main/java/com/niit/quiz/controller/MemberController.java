@@ -1,13 +1,16 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
 import com.niit.quiz.base.request.PassRequest;
+import com.niit.quiz.base.request.QuitRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.entity.Member;
 import com.niit.quiz.model.enums.PassEnum;
+import com.niit.quiz.model.enums.QuitEnum;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.service.MemberService;
@@ -36,6 +39,7 @@ public class MemberController {
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("user_id", id);
         memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
+        memberQueryWrapper.eq("quit", QuitEnum.NOT_QUIT.getValue());
         return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
@@ -53,6 +57,7 @@ public class MemberController {
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("team_id", id);
         memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
+        memberQueryWrapper.eq("quit", QuitEnum.NOT_QUIT.getValue());
         return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
@@ -72,12 +77,25 @@ public class MemberController {
         memberQueryWrapper.eq("team_id", teamId);
         memberQueryWrapper.eq("user_id", userId);
         memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
+        memberQueryWrapper.eq("quit", QuitEnum.NOT_QUIT.getValue());
         Member member = memberService.getOne(memberQueryWrapper);
         if (member == null) {
             return ResultUtils.error("No membership found");
         } else {
             return ResultUtils.success(member.getId());
         }
+    }
+
+    @PostMapping("/quit")
+    public BaseResponse<Boolean> quitMembership(@RequestBody QuitRequest quitRequest) {
+        Integer id = quitRequest.getId();
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        UpdateWrapper<Member> memberUpdateWrapper = new UpdateWrapper<>();
+        memberUpdateWrapper.eq("id", id);
+        memberUpdateWrapper.set("quit", QuitEnum.QUIT.getValue());
+        return ResultUtils.success(memberService.update(memberUpdateWrapper));
     }
 
     /**
@@ -94,14 +112,18 @@ public class MemberController {
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("team_id", member.getTeamId());
         memberQueryWrapper.eq("user_id", member.getUserId());
-        if (memberService.getOne(memberQueryWrapper) != null) {
-            return ResultUtils.error("This user has already applied.");
-        } else {
+        Member originMember = memberService.getOne(memberQueryWrapper);
+        if (originMember == null) {
             String date = DateUtils.getCurrentDate();
             member.setJoinTime(date);
             member.setCreateTime(date);
             memberService.save(member);
             return ResultUtils.success(member.getId());
+        } else {
+            originMember.setPass(PassEnum.PENDING.getValue());
+            originMember.setQuit(QuitEnum.NOT_QUIT.getValue());
+            memberService.updateById(originMember);
+            return ResultUtils.success(originMember.getId());
         }
     }
 
