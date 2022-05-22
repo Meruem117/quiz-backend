@@ -42,6 +42,11 @@ public class Member implements Serializable {
     @TableField(value = "pass", fill = FieldFill.INSERT)
     private String pass;
     /**
+     * is quited: 0 - not quit, 1 - quit
+     */
+    @TableField("quit")
+    private Integer quit;
+    /**
      * join time
      */
     @TableField("join_time")
