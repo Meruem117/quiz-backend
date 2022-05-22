@@ -67,8 +67,9 @@ public class MemberController {
         if (member == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        String date = DateUtils.getCurrentDateTime();
+        String date = DateUtils.getCurrentDate();
         member.setJoinTime(date);
+        member.setCreateTime(date);
         memberService.save(member);
         return ResultUtils.success(member.getId());
     }
