@@ -67,11 +67,18 @@ public class MemberController {
         if (member == null) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        String date = DateUtils.getCurrentDate();
-        member.setJoinTime(date);
-        member.setCreateTime(date);
-        memberService.save(member);
-        return ResultUtils.success(member.getId());
+        QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
+        memberQueryWrapper.eq("team_id", member.getTeamId());
+        memberQueryWrapper.eq("user_id", member.getUserId());
+        if (memberService.getOne(memberQueryWrapper) != null) {
+            return ResultUtils.error("This user has already applied.");
+        } else {
+            String date = DateUtils.getCurrentDate();
+            member.setJoinTime(date);
+            member.setCreateTime(date);
+            memberService.save(member);
+            return ResultUtils.success(member.getId());
+        }
     }
 
     /**
