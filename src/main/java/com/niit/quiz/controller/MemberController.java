@@ -57,6 +57,30 @@ public class MemberController {
     }
 
     /**
+     * check membership
+     *
+     * @param teamId team id
+     * @param userId user id
+     * @return check status
+     */
+    @GetMapping("/check")
+    public BaseResponse<Integer> checkMembership(@RequestParam int teamId, @RequestParam int userId) {
+        if (teamId < 1 || userId < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
+        memberQueryWrapper.eq("team_id", teamId);
+        memberQueryWrapper.eq("user_id", userId);
+        memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
+        Member member = memberService.getOne(memberQueryWrapper);
+        if (member == null) {
+            return ResultUtils.error("No membership found");
+        } else {
+            return ResultUtils.success(member.getId());
+        }
+    }
+
+    /**
      * add member
      *
      * @param member member item
