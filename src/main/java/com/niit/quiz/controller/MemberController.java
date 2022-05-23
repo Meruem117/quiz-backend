@@ -2,10 +2,13 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.request.PassRequest;
 import com.niit.quiz.base.request.QuitRequest;
 import com.niit.quiz.base.response.BaseResponse;
@@ -98,6 +101,24 @@ public class MemberController {
         memberUpdateWrapper.eq("id", id);
         memberUpdateWrapper.set("quit", QuitEnum.QUIT.getValue());
         return ResultUtils.success(memberService.update(memberUpdateWrapper));
+    }
+
+    /**
+     * get member with pagination
+     *
+     * @param pageRequest page request
+     * @return member item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Member>> getMemberPages(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Page<Member> memberPage = new Page<>(page, size);
+        QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(memberService.page(memberPage, memberQueryWrapper));
     }
 
     /**

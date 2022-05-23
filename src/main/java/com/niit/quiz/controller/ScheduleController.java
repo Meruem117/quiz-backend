@@ -1,9 +1,12 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
@@ -108,6 +111,24 @@ public class ScheduleController {
             scheduleQueryWrapper.last(limitSql);
         }
         return ResultUtils.success(scheduleService.list(scheduleQueryWrapper));
+    }
+
+    /**
+     * get schedule with pagination
+     *
+     * @param pageRequest page request
+     * @return schedule item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Schedule>> getSchedulePages(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Page<Schedule> schedulePage = new Page<>(page, size);
+        QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(scheduleService.page(schedulePage, scheduleQueryWrapper));
     }
 
     /**

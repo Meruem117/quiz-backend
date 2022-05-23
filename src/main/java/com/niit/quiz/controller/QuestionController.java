@@ -1,10 +1,13 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.request.PassRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.enums.PassEnum;
@@ -90,6 +93,24 @@ public class QuestionController {
         }
         questionQueryWrapper.in("id", ids);
         return ResultUtils.success(questionService.list(questionQueryWrapper));
+    }
+
+    /**
+     * get question with pagination
+     *
+     * @param pageRequest page request
+     * @return question item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Question>> getQuestionPages(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Page<Question> questionPage = new Page<>(page, size);
+        QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(questionService.page(questionPage, questionQueryWrapper));
     }
 
     /**

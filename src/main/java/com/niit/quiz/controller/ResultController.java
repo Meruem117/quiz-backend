@@ -1,9 +1,12 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.entity.Result;
 import com.niit.quiz.model.enums.IsTakeEnum;
@@ -103,6 +106,24 @@ public class ResultController {
         resultQueryWrapper.eq("schedule_id", scheduleId);
         resultQueryWrapper.eq("participant_id", participantId);
         return ResultUtils.success(resultService.getOne(resultQueryWrapper));
+    }
+
+    /**
+     * get result with pagination
+     *
+     * @param pageRequest page request
+     * @return result item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Result>> getResultPages(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Page<Result> resultPage = new Page<>(page, size);
+        QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(resultService.page(resultPage, resultQueryWrapper));
     }
 
     /**

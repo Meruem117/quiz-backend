@@ -1,8 +1,12 @@
 package com.niit.quiz.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.model.entity.Quiz;
 import com.niit.quiz.utils.DateUtils;
@@ -41,6 +45,24 @@ public class QuizController {
     @GetMapping("/list")
     public BaseResponse<List<Quiz>> getQuizList() {
         return ResultUtils.success(quizService.list());
+    }
+
+    /**
+     * get quiz with pagination
+     *
+     * @param pageRequest page request
+     * @return quiz item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Quiz>> getQuizPages(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        Page<Quiz> quizPage = new Page<>(page, size);
+        QueryWrapper<Quiz> quizQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(quizService.page(quizPage, quizQueryWrapper));
     }
 
     /**
