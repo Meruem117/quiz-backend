@@ -110,7 +110,7 @@ public class MemberController {
      * @return member item list with pagination
      */
     @GetMapping("/page")
-    public BaseResponse<IPage<Member>> getMemberPages(PageRequest pageRequest) {
+    public BaseResponse<IPage<Member>> getMemberPages(PageRequest pageRequest, Integer teamId) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
         if (page < 1 || size < 0) {
@@ -118,6 +118,9 @@ public class MemberController {
         }
         Page<Member> memberPage = new Page<>(page, size);
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
+        if (ObjectUtils.isNotNull(teamId)) {
+            memberQueryWrapper.eq("team_id", teamId);
+        }
         return ResultUtils.success(memberService.page(memberPage, memberQueryWrapper));
     }
 
