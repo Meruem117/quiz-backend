@@ -76,8 +76,9 @@ public class TeamController {
         if (page < 1 || size < 0) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
+        Page<Team> teamPage = new Page<>(page, size);
         QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
-        return ResultUtils.success(teamService.page(new Page<>(page, size), teamQueryWrapper));
+        return ResultUtils.success(teamService.page(teamPage, teamQueryWrapper));
     }
 
     /**

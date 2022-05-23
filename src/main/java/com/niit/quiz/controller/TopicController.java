@@ -1,5 +1,6 @@
 package com.niit.quiz.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
@@ -33,20 +34,21 @@ public class TopicController {
     }
 
     /**
-     * get topics with pagination
+     * get topic with pagination
      *
      * @param pageRequest page request
      * @return topic item list with pagination
      */
     @GetMapping("/page")
     public BaseResponse<IPage<Topic>> getTopicPages(PageRequest pageRequest) {
-        int page = pageRequest.getPage();
-        int size = pageRequest.getSize();
-        if (page < 1) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         Page<Topic> topicPage = new Page<>(page, size);
-        return ResultUtils.success(topicService.page(topicPage));
+        QueryWrapper<Topic> topicQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(topicService.page(topicPage, topicQueryWrapper));
     }
 
     /**

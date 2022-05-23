@@ -87,11 +87,12 @@ public class UserController {
         if (page < 1 || size < 0) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
+        Page<User> userPage = new Page<>(page, size);
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(key)) {
             userQueryWrapper.like("name", key);
         }
-        return ResultUtils.success(userService.page(new Page<>(page, size), userQueryWrapper));
+        return ResultUtils.success(userService.page(userPage, userQueryWrapper));
     }
 
     /**
