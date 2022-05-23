@@ -84,8 +84,7 @@ public class UserController {
     public BaseResponse<IPage<User>> getUserPages(PageRequest pageRequest, String key) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
-
-        if (page < 1) {
+        if (page < 1 || size < 0) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();

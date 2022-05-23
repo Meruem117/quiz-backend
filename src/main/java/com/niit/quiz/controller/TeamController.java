@@ -1,9 +1,12 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
@@ -58,6 +61,23 @@ public class TeamController {
         QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
         teamQueryWrapper.eq("leader_id", id);
         return ResultUtils.success(teamService.list(teamQueryWrapper));
+    }
+
+    /**
+     * get team with pagination
+     *
+     * @param pageRequest page request
+     * @return team item list with pagination
+     */
+    @GetMapping("/page")
+    public BaseResponse<IPage<Team>> getTeamPages(PageRequest pageRequest) {
+        Integer page = pageRequest.getPage();
+        Integer size = pageRequest.getSize();
+        if (page < 1 || size < 0) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+        return ResultUtils.success(teamService.page(new Page<>(page, size), teamQueryWrapper));
     }
 
     /**
