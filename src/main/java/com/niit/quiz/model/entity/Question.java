@@ -37,6 +37,11 @@ public class Question implements Serializable {
     @TableField("topic")
     private String topic;
     /**
+     * question topic id
+     */
+    @TableField("topic_id")
+    private Integer topicId;
+    /**
      * question type: 1-single choice, 0-multiple choice
      */
     @TableField("type")
