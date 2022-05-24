@@ -91,6 +91,12 @@ public class MemberController {
         }
     }
 
+    /**
+     * quit membership
+     *
+     * @param quitRequest quit request
+     * @return quit status
+     */
     @PostMapping("/quit")
     public BaseResponse<Boolean> quitMembership(@RequestBody QuitRequest quitRequest) {
         Integer id = quitRequest.getId();
@@ -170,9 +176,10 @@ public class MemberController {
         if (id < 1 || !PassEnum.include(pass)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        Member member = memberService.getById(id);
-        member.setPass(pass);
-        return ResultUtils.success(memberService.updateById(member));
+        UpdateWrapper<Member> memberUpdateWrapper = new UpdateWrapper<>();
+        memberUpdateWrapper.eq("id", id);
+        memberUpdateWrapper.set("pass", pass);
+        return ResultUtils.success(memberService.update(memberUpdateWrapper));
     }
 
     /**
