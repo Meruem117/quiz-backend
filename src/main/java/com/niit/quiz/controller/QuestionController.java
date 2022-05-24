@@ -81,7 +81,7 @@ public class QuestionController {
      * @param id topic id
      * @return question item list
      */
-    @GetMapping("/list")
+    @GetMapping("/topic")
     public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
