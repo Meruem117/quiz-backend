@@ -2,6 +2,7 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
@@ -65,14 +66,28 @@ public class QuestionController {
      * @return question item list
      */
     @GetMapping("/list")
-    public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam String topic) {
-        if (topic == null) {
-            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
-        }
+    public BaseResponse<List<Question>> getQuestionListByTopicName(@RequestParam String topic) {
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(topic)) {
             questionQueryWrapper.eq("topic", topic);
         }
+        questionQueryWrapper.eq("pass", PassEnum.PASS.getValue());
+        return ResultUtils.success(questionService.list(questionQueryWrapper));
+    }
+
+    /**
+     * get question list by topic id
+     *
+     * @param id topic id
+     * @return question item list
+     */
+    @GetMapping("/list")
+    public BaseResponse<List<Question>> getQuestionListByTopicId(@RequestParam Integer id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
+        questionQueryWrapper.eq("topic_id", id);
         questionQueryWrapper.eq("pass", PassEnum.PASS.getValue());
         return ResultUtils.success(questionService.list(questionQueryWrapper));
     }
@@ -102,7 +117,7 @@ public class QuestionController {
      * @return question item list with pagination
      */
     @GetMapping("/page")
-    public BaseResponse<IPage<Question>> getQuestionPages(PageRequest pageRequest) {
+    public BaseResponse<IPage<Question>> getQuestionPages(PageRequest pageRequest, Integer topicId) {
         Integer page = pageRequest.getPage();
         Integer size = pageRequest.getSize();
         if (page < 1 || size < 0) {
@@ -110,6 +125,9 @@ public class QuestionController {
         }
         Page<Question> questionPage = new Page<>(page, size);
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<>();
+        if (ObjectUtils.isNotNull(topicId)) {
+            questionQueryWrapper.eq("topic_id", topicId);
+        }
         return ResultUtils.success(questionService.page(questionPage, questionQueryWrapper));
     }
 
