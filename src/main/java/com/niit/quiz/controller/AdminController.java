@@ -1,6 +1,7 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.niit.quiz.base.request.LoginRequest;
 import com.niit.quiz.base.response.BaseResponse;
 import com.niit.quiz.base.response.CheckInfo;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/admin")
@@ -34,9 +34,13 @@ public class AdminController {
         String password = request.getPassword();
         QueryWrapper<Admin> adminQueryWrapper = new QueryWrapper<>();
         adminQueryWrapper.eq("email", email);
+        adminQueryWrapper.eq("password", password);
         Admin admin = adminService.getOne(adminQueryWrapper);
-        Boolean check = Objects.equals(password, admin.getPassword());
-        CheckInfo info = new CheckInfo(admin.getId(), admin.getName(), -1, "");
-        return ResultUtils.success(new CheckResponse(check, info));
+        if (ObjectUtils.isNotNull(admin)) {
+            CheckInfo info = new CheckInfo(admin.getId(), admin.getName(), null, null);
+            return ResultUtils.success(new CheckResponse(true, info));
+        } else {
+            return ResultUtils.error("wrong email or password");
+        }
     }
 }

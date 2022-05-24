@@ -2,6 +2,7 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
@@ -103,7 +104,7 @@ public class UserController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addUser(@RequestBody User user) {
-        if (user == null) {
+        if (ObjectUtils.isNull(user)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
@@ -126,7 +127,7 @@ public class UserController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateUser(@RequestBody User user) {
-        if (user == null) {
+        if (ObjectUtils.isNull(user)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(userService.updateById(user));
@@ -140,7 +141,7 @@ public class UserController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(userService.removeById(deleteRequest.getId()));

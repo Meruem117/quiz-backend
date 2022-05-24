@@ -1,6 +1,7 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -36,7 +37,7 @@ public class QuestionController {
      * @return question item
      */
     @GetMapping("/get")
-    public BaseResponse<Question> getQuestionById(@RequestParam int id) {
+    public BaseResponse<Question> getQuestionById(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -50,7 +51,7 @@ public class QuestionController {
      * @return question item list
      */
     @GetMapping("/up")
-    public BaseResponse<List<Question>> getQuestionListByUpId(@RequestParam int id) {
+    public BaseResponse<List<Question>> getQuestionListByUpId(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -139,7 +140,7 @@ public class QuestionController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addQuestion(@RequestBody Question question) {
-        if (question == null) {
+        if (ObjectUtils.isNull(question)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String datetime = DateUtils.getCurrentDateTime();
@@ -162,9 +163,10 @@ public class QuestionController {
         if (id < 1 || !PassEnum.include(pass)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        Question question = questionService.getById(id);
-        question.setPass(pass);
-        return ResultUtils.success(questionService.updateById(question));
+        UpdateWrapper<Question> questionUpdateWrapper = new UpdateWrapper<>();
+        questionUpdateWrapper.eq("id", id);
+        questionUpdateWrapper.set("pass", pass);
+        return ResultUtils.success(questionService.update(questionUpdateWrapper));
     }
 
     /**
@@ -175,7 +177,7 @@ public class QuestionController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateQuestion(@RequestBody Question question) {
-        if (question == null) {
+        if (ObjectUtils.isNull(question)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String datetime = DateUtils.getCurrentDateTime();
@@ -191,7 +193,7 @@ public class QuestionController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteQuestion(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(questionService.removeById(deleteRequest.getId()));

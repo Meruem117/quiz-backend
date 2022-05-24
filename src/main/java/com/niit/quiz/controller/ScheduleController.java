@@ -32,7 +32,7 @@ public class ScheduleController {
      * @return schedule item
      */
     @GetMapping("/get")
-    public BaseResponse<Schedule> getScheduleById(@RequestParam int id) {
+    public BaseResponse<Schedule> getScheduleById(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -56,7 +56,7 @@ public class ScheduleController {
      * @return schedule item list
      */
     @GetMapping("/quiz")
-    public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam int quizId) {
+    public BaseResponse<List<Schedule>> getScheduleListByQuizId(@RequestParam Integer quizId) {
         if (quizId < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -72,7 +72,7 @@ public class ScheduleController {
      * @return schedule item list
      */
     @GetMapping("/start")
-    public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleStartList(@RequestParam Integer limit) {
         QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
         scheduleQueryWrapper.eq("status", StatusEnum.START.getValue());
         if (limit > 0) {
@@ -88,7 +88,7 @@ public class ScheduleController {
      * @return schedule item list
      */
     @GetMapping("/end")
-    public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleEndList(@RequestParam Integer limit) {
         QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
         scheduleQueryWrapper.eq("status", StatusEnum.END.getValue());
         if (limit > 0) {
@@ -104,7 +104,7 @@ public class ScheduleController {
      * @return schedule item list
      */
     @GetMapping("/remain")
-    public BaseResponse<List<Schedule>> getScheduleRemainList(@RequestParam int limit) {
+    public BaseResponse<List<Schedule>> getScheduleRemainList(@RequestParam Integer limit) {
         QueryWrapper<Schedule> scheduleQueryWrapper = new QueryWrapper<>();
         scheduleQueryWrapper.eq("status", StatusEnum.NOT_START.getValue());
         if (limit > 0) {
@@ -143,7 +143,7 @@ public class ScheduleController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addSchedule(@RequestBody Schedule schedule) {
-        if (schedule == null) {
+        if (ObjectUtils.isNull(schedule)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String date = DateUtils.getCurrentDateTime();
@@ -160,7 +160,7 @@ public class ScheduleController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateSchedule(@RequestBody Schedule schedule) {
-        if (schedule == null) {
+        if (ObjectUtils.isNull(schedule)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(scheduleService.updateById(schedule));
@@ -174,7 +174,7 @@ public class ScheduleController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteSchedule(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(scheduleService.removeById(deleteRequest.getId()));

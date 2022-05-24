@@ -2,6 +2,7 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
@@ -59,7 +60,7 @@ public class TopicController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addTopic(@RequestBody Topic topic) {
-        if (topic == null) {
+        if (ObjectUtils.isNull(topic)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String date = DateUtils.getCurrentDate();
@@ -76,7 +77,7 @@ public class TopicController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateTopic(@RequestBody Topic topic) {
-        if (topic == null) {
+        if (ObjectUtils.isNull(topic)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(topicService.updateById(topic));
@@ -90,7 +91,7 @@ public class TopicController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteTopic(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(topicService.removeById(deleteRequest.getId()));

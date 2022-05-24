@@ -2,6 +2,7 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
@@ -89,7 +90,7 @@ public class TeamController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addTeam(@RequestBody Team team) {
-        if (team == null) {
+        if (ObjectUtils.isNull(team)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String date = DateUtils.getCurrentDateTime();
@@ -106,7 +107,7 @@ public class TeamController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateTeam(@RequestBody Team team) {
-        if (team == null) {
+        if (ObjectUtils.isNull(team)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(teamService.updateById(team));
@@ -120,7 +121,7 @@ public class TeamController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteTeam(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(teamService.removeById(deleteRequest.getId()));

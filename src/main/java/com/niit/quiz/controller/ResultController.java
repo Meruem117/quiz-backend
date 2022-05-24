@@ -2,6 +2,7 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
@@ -32,7 +33,7 @@ public class ResultController {
      * @return result item
      */
     @GetMapping("/get")
-    public BaseResponse<Result> getResultById(@RequestParam int id) {
+    public BaseResponse<Result> getResultById(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -47,7 +48,7 @@ public class ResultController {
      * @return result item list
      */
     @GetMapping("/list")
-    public BaseResponse<List<Result>> getResultListByParticipantId(@RequestParam int id, @RequestParam int isTeam) {
+    public BaseResponse<List<Result>> getResultListByParticipantId(@RequestParam Integer id, @RequestParam Integer isTeam) {
         if (id < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -66,8 +67,8 @@ public class ResultController {
      * @return result item
      */
     @GetMapping("/attend")
-    public BaseResponse<Result> getResultWhenAttend(@RequestParam int scheduleId, @RequestParam int participantId,
-                                                    @RequestParam int isTeam) {
+    public BaseResponse<Result> getResultWhenAttend(@RequestParam Integer scheduleId, @RequestParam Integer participantId,
+                                                    @RequestParam Integer isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -96,8 +97,8 @@ public class ResultController {
      * @return result item
      */
     @GetMapping("/review")
-    public BaseResponse<Result> reviewResult(@RequestParam int scheduleId, @RequestParam int participantId,
-                                             @RequestParam int isTeam) {
+    public BaseResponse<Result> reviewResult(@RequestParam Integer scheduleId, @RequestParam Integer participantId,
+                                             @RequestParam Integer isTeam) {
         if (scheduleId < 1 || participantId < 1 || !IsTeamEnum.include(isTeam)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -134,7 +135,7 @@ public class ResultController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addResult(@RequestBody Result result) {
-        if (result == null) {
+        if (ObjectUtils.isNull(result)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Result> resultQueryWrapper = new QueryWrapper<>();
@@ -161,7 +162,7 @@ public class ResultController {
      */
     @PostMapping("/submit")
     public BaseResponse<Boolean> submitResult(@RequestBody Result result) {
-        if (result == null) {
+        if (ObjectUtils.isNull(result)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String datetime = DateUtils.getCurrentDateTime();
@@ -178,7 +179,7 @@ public class ResultController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateResult(@RequestBody Result result) {
-        if (result == null) {
+        if (ObjectUtils.isNull(result)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(resultService.updateById(result));
@@ -192,7 +193,7 @@ public class ResultController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteResult(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(resultService.removeById(deleteRequest.getId()));

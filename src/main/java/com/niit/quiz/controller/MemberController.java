@@ -37,7 +37,7 @@ public class MemberController {
      * @return member item list
      */
     @GetMapping("/team")
-    public BaseResponse<List<Member>> getTeamListByUserId(@RequestParam int id) {
+    public BaseResponse<List<Member>> getTeamListByUserId(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -55,7 +55,7 @@ public class MemberController {
      * @return member item list
      */
     @GetMapping("/user")
-    public BaseResponse<List<Member>> getUserListByTeamId(@RequestParam int id) {
+    public BaseResponse<List<Member>> getUserListByTeamId(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -74,7 +74,7 @@ public class MemberController {
      * @return check status
      */
     @GetMapping("/check")
-    public BaseResponse<Integer> checkMembership(@RequestParam int teamId, @RequestParam int userId) {
+    public BaseResponse<Integer> checkMembership(@RequestParam Integer teamId, @RequestParam Integer userId) {
         if (teamId < 1 || userId < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -84,7 +84,7 @@ public class MemberController {
         memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
         memberQueryWrapper.eq("quit", QuitEnum.NOT_QUIT.getValue());
         Member member = memberService.getOne(memberQueryWrapper);
-        if (member == null) {
+        if (ObjectUtils.isNull(member)) {
             return ResultUtils.error("No membership found");
         } else {
             return ResultUtils.success(member.getId());
@@ -138,7 +138,7 @@ public class MemberController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addMember(@RequestBody Member member) {
-        if (member == null) {
+        if (ObjectUtils.isNull(member)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
@@ -190,7 +190,7 @@ public class MemberController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteTeam(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(memberService.removeById(deleteRequest.getId()));

@@ -2,6 +2,7 @@ package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
@@ -30,7 +31,7 @@ public class QuizController {
      * @return quiz item
      */
     @GetMapping("/get")
-    public BaseResponse<Quiz> getQuizById(@RequestParam int id) {
+    public BaseResponse<Quiz> getQuizById(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -73,7 +74,7 @@ public class QuizController {
      */
     @PostMapping("/add")
     public BaseResponse<Integer> addQuiz(@RequestBody Quiz quiz) {
-        if (quiz == null) {
+        if (ObjectUtils.isNull(quiz)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         String date = DateUtils.getCurrentDate();
@@ -90,7 +91,7 @@ public class QuizController {
      */
     @PostMapping("/update")
     public BaseResponse<Boolean> updateQuiz(@RequestBody Quiz quiz) {
-        if (quiz == null) {
+        if (ObjectUtils.isNull(quiz)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(quizService.updateById(quiz));
@@ -104,7 +105,7 @@ public class QuizController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteQuiz(@RequestBody DeleteRequest deleteRequest) {
-        if (deleteRequest == null || deleteRequest.getId() < 1) {
+        if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         return ResultUtils.success(quizService.removeById(deleteRequest.getId()));
