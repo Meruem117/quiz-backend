@@ -37,14 +37,14 @@ public class MemberController {
      * @return member item list
      */
     @GetMapping("/team")
-    public BaseResponse<List<Member>> getTeamListByUserId(@RequestParam Integer id) {
-        if (id < 1) {
+    public BaseResponse<List<Member>> getTeamListByUserId(@RequestParam Integer id, @RequestParam String pass, @RequestParam Integer quit) {
+        if (id < 1 || !PassEnum.include(pass) || !QuitEnum.include(quit)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("user_id", id);
-        memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
-        memberQueryWrapper.eq("quit", QuitEnum.NOT_QUIT.getValue());
+        memberQueryWrapper.eq("pass", pass);
+        memberQueryWrapper.eq("quit", quit);
         return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
@@ -55,14 +55,14 @@ public class MemberController {
      * @return member item list
      */
     @GetMapping("/user")
-    public BaseResponse<List<Member>> getUserListByTeamId(@RequestParam Integer id) {
-        if (id < 1) {
+    public BaseResponse<List<Member>> getUserListByTeamId(@RequestParam Integer id, @RequestParam String pass, @RequestParam Integer quit) {
+        if (id < 1 || !PassEnum.include(pass) || !QuitEnum.include(quit)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
         QueryWrapper<Member> memberQueryWrapper = new QueryWrapper<>();
         memberQueryWrapper.eq("team_id", id);
-        memberQueryWrapper.eq("pass", PassEnum.PASS.getValue());
-        memberQueryWrapper.eq("quit", QuitEnum.NOT_QUIT.getValue());
+        memberQueryWrapper.eq("pass", pass);
+        memberQueryWrapper.eq("quit", quit);
         return ResultUtils.success(memberService.list(memberQueryWrapper));
     }
 
