@@ -5,7 +5,7 @@ import java.util.Objects;
 public enum PassEnum {
     PENDING("0"),
     PASS("1"),
-    NOT_PASS("2");
+    DENIED("2");
 
     private final String value;
 
