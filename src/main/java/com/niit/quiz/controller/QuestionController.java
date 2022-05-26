@@ -1,6 +1,7 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/question")
@@ -158,15 +161,16 @@ public class QuestionController {
      */
     @PostMapping("/pass")
     public BaseResponse<Boolean> passQuestion(@RequestBody PassRequest passRequest) {
-        Integer id = passRequest.getId();
+        String ids = passRequest.getIds();
         String pass = passRequest.getPass();
-        if (id < 1 || !PassEnum.include(pass)) {
+        if (StringUtils.isBlank(ids) || !PassEnum.include(pass)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        UpdateWrapper<Question> questionUpdateWrapper = new UpdateWrapper<>();
-        questionUpdateWrapper.eq("id", id);
-        questionUpdateWrapper.set("pass", pass);
-        return ResultUtils.success(questionService.update(questionUpdateWrapper));
+        List<Integer> idList = Arrays.stream(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        LambdaUpdateWrapper<Question> questionLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        questionLambdaUpdateWrapper.in(Question::getId, idList);
+        questionLambdaUpdateWrapper.set(Question::getPass, pass);
+        return ResultUtils.success(questionService.update(questionLambdaUpdateWrapper));
     }
 
     /**

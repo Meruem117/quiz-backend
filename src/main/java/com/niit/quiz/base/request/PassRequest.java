@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PassRequest {
-    private Integer id;
+    private String ids;
     private String pass;
 }

@@ -1,9 +1,11 @@
 package com.niit.quiz.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
@@ -21,8 +23,10 @@ import com.niit.quiz.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/member")
@@ -171,15 +175,16 @@ public class MemberController {
      */
     @PostMapping("/pass")
     public BaseResponse<Boolean> passMember(@RequestBody PassRequest passRequest) {
-        Integer id = passRequest.getId();
+        String ids = passRequest.getIds();
         String pass = passRequest.getPass();
-        if (id < 1 || !PassEnum.include(pass)) {
+        if (StringUtils.isBlank(ids) || !PassEnum.include(pass)) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
-        UpdateWrapper<Member> memberUpdateWrapper = new UpdateWrapper<>();
-        memberUpdateWrapper.eq("id", id);
-        memberUpdateWrapper.set("pass", pass);
-        return ResultUtils.success(memberService.update(memberUpdateWrapper));
+        List<Integer> idList = Arrays.stream(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        LambdaUpdateWrapper<Member> memberLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        memberLambdaUpdateWrapper.in(Member::getId, idList);
+        memberLambdaUpdateWrapper.set(Member::getPass, pass);
+        return ResultUtils.success(memberService.update(memberLambdaUpdateWrapper));
     }
 
     /**
