@@ -148,6 +148,7 @@ public class ScheduleController {
         }
         String date = DateUtils.getCurrentDateTime();
         schedule.setCreateTime(date);
+        schedule.setStatus(StatusEnum.NOT_START.getValue());
         scheduleService.save(schedule);
         return ResultUtils.success(schedule.getId());
     }
