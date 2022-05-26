@@ -52,6 +52,11 @@ public class Member implements Serializable {
     @TableField("join_time")
     private String joinTime;
     /**
+     * apply time
+     */
+    @TableField("apply_time")
+    private String applyTime;
+    /**
      * create time
      */
     @TableField("create_time")

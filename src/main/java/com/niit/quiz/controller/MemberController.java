@@ -149,18 +149,20 @@ public class MemberController {
         memberQueryWrapper.eq("team_id", member.getTeamId());
         memberQueryWrapper.eq("user_id", member.getUserId());
         Member originMember = memberService.getOne(memberQueryWrapper);
+        String date = DateUtils.getCurrentDate();
         if (ObjectUtils.isNotNull(originMember)) {
             if (Objects.equals(originMember.getQuit(), QuitEnum.NOT_QUIT.getValue())) {
                 return ResultUtils.error("You have already applied before");
             } else {
                 originMember.setPass(PassEnum.PENDING.getValue());
                 originMember.setQuit(QuitEnum.NOT_QUIT.getValue());
+                originMember.setApplyTime(date);
                 memberService.updateById(originMember);
                 return ResultUtils.success(originMember.getId());
             }
         } else {
-            String date = DateUtils.getCurrentDate();
             member.setJoinTime(date);
+            member.setApplyTime(date);
             member.setCreateTime(date);
             memberService.save(member);
             return ResultUtils.success(member.getId());
