@@ -203,7 +203,7 @@ public class MemberController {
         }
         LambdaUpdateWrapper<Member> memberLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         memberLambdaUpdateWrapper.eq(Member::getTeamId, id);
-        memberLambdaUpdateWrapper.set(Member::getQuit, QuitEnum.QUIT);
+        memberLambdaUpdateWrapper.set(Member::getQuit, QuitEnum.QUIT.getValue());
         return ResultUtils.success(memberService.update(memberLambdaUpdateWrapper));
     }
 
