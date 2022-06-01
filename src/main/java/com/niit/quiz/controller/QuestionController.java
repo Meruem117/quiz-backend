@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.niit.quiz.base.exception.BaseException;
 import com.niit.quiz.base.exception.ErrorCodeEnum;
 import com.niit.quiz.base.request.DeleteRequest;
+import com.niit.quiz.base.request.DisableRequest;
 import com.niit.quiz.base.request.PageRequest;
 import com.niit.quiz.base.request.PassRequest;
 import com.niit.quiz.base.response.BaseResponse;
@@ -171,6 +172,22 @@ public class QuestionController {
         questionLambdaUpdateWrapper.in(Question::getId, idList);
         questionLambdaUpdateWrapper.set(Question::getPass, pass);
         return ResultUtils.success(questionService.update(questionLambdaUpdateWrapper));
+    }
+
+    /**
+     * disable questions
+     *
+     * @param disableRequest disable request
+     * @return disable status
+     */
+    @PostMapping("/disable")
+    public BaseResponse<Boolean> disableQuestion(@RequestBody DisableRequest disableRequest) {
+        String ids = disableRequest.getIds();
+        if (StringUtils.isBlank(ids)) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        List<Integer> idList = Arrays.stream(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        return ResultUtils.success(questionService.removeByIds(idList));
     }
 
     /**
