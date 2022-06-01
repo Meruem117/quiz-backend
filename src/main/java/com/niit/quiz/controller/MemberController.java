@@ -190,6 +190,24 @@ public class MemberController {
     }
 
     /**
+     * dismiss members by team id
+     *
+     * @param deleteRequest team id
+     * @return dismiss status
+     */
+    @PostMapping("/dismiss")
+    public BaseResponse<Boolean> dismissMembersByTeamId(@RequestBody DeleteRequest deleteRequest) {
+        Integer id = deleteRequest.getId();
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        LambdaUpdateWrapper<Member> memberLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        memberLambdaUpdateWrapper.eq(Member::getTeamId, id);
+        memberLambdaUpdateWrapper.set(Member::getQuit, QuitEnum.QUIT);
+        return ResultUtils.success(memberService.update(memberLambdaUpdateWrapper));
+    }
+
+    /**
      * logical delete member
      *
      * @param deleteRequest member id

@@ -31,7 +31,7 @@ public class TeamController {
      * @return team item
      */
     @GetMapping("/get")
-    public BaseResponse<Team> getTeamById(@RequestParam int id) {
+    public BaseResponse<Team> getTeamById(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
@@ -55,7 +55,7 @@ public class TeamController {
      * @return team item list
      */
     @GetMapping("/leader")
-    public BaseResponse<List<Team>> getTeamListByLeaderId(@RequestParam int id) {
+    public BaseResponse<List<Team>> getTeamListByLeaderId(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
