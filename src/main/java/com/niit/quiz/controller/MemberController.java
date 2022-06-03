@@ -41,6 +41,7 @@ public class MemberController {
      * @param id member id
      * @return member item
      */
+    @GetMapping("/get")
     public BaseResponse<Member> getMemberById(@RequestParam Integer id) {
         if (id < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
