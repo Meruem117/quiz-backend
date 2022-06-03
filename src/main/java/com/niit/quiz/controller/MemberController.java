@@ -20,6 +20,7 @@ import com.niit.quiz.model.enums.QuitEnum;
 import com.niit.quiz.utils.DateUtils;
 import com.niit.quiz.utils.ResultUtils;
 import com.niit.quiz.service.MemberService;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -33,6 +34,19 @@ import java.util.stream.Collectors;
 public class MemberController {
     @Resource
     private MemberService memberService;
+
+    /**
+     * get member by id
+     *
+     * @param id member id
+     * @return member item
+     */
+    public BaseResponse<Member> getMemberById(@RequestParam Integer id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(memberService.getById(id));
+    }
 
     /**
      * get a user's teams
