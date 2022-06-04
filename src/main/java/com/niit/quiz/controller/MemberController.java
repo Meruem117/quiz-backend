@@ -223,13 +223,27 @@ public class MemberController {
     }
 
     /**
+     * update member
+     *
+     * @param member member item
+     * @return update status
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updateMember(@RequestBody Member member) {
+        if (ObjectUtils.isNull(member)) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(memberService.updateById(member));
+    }
+
+    /**
      * logical delete member
      *
      * @param deleteRequest member id
      * @return delete status
      */
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteTeam(@RequestBody DeleteRequest deleteRequest) {
+    public BaseResponse<Boolean> deleteMember(@RequestBody DeleteRequest deleteRequest) {
         if (ObjectUtils.isNull(deleteRequest) || deleteRequest.getId() < 1) {
             throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
         }
