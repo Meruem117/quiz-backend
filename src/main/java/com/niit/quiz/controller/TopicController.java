@@ -25,6 +25,20 @@ public class TopicController {
     private TopicService topicService;
 
     /**
+     * get topic by id
+     *
+     * @param id topic id
+     * @return topic item
+     */
+    @GetMapping("/get")
+    public BaseResponse<Topic> getTopicById(@RequestParam Integer id) {
+        if (id < 1) {
+            throw new BaseException(ErrorCodeEnum.REQUEST_PARAMS_ERROR);
+        }
+        return ResultUtils.success(topicService.getById(id));
+    }
+
+    /**
      * get topic list
      *
      * @return topic item list
