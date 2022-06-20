@@ -17,7 +17,6 @@ import com.niit.quiz.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
